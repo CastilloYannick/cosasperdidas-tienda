@@ -3,12 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Cosas Perdidas · Tienda</title>
+  <title>Cosas Perdidas · Tenis, tacones y accesorios en Guatemala</title>
   <meta name="description" content="Found by me, waiting for you. Tenis, tacones, ropa, accesorios y más, elegidos uno por uno. Arma tu carrito y envíame tu pedido por Instagram.">
   <meta name="theme-color" content="#7d80da">
   <meta property="og:title" content="Cosas Perdidas">
   <meta property="og:description" content="Found by me, waiting for you. Pídelo por Instagram @cosass.perdidas">
-  <meta property="og:image" content="https://cosasperdidas.shop/img/p/adidas-gazelle-verde-petroleo-1.webp">
+  <meta property="og:image" content="https://www.cosasperdidas.shop/img/compartir.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.cosasperdidas.shop/">
+  <meta property="og:locale" content="es_GT">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://www.cosasperdidas.shop/">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="img/icono-180.png">
+  <meta name="apple-mobile-web-app-title" content="Cosas Perdidas">
+  <link rel="preload" as="image" href="img/p/puma-rosados-1-m.webp">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Store","name":"Cosas Perdidas","url":"https://www.cosasperdidas.shop/","image":"https://www.cosasperdidas.shop/img/compartir.jpg","slogan":"Found by me, waiting for you","description":"Tenis, tacones, ropa, accesorios y más, elegidos uno por uno. Envíos a toda Guatemala.","areaServed":"GT","currenciesAccepted":"GTQ","sameAs":["https://www.instagram.com/cosass.perdidas/"]}
+  </script>
   <link rel="icon" href="img/flor.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -94,7 +108,11 @@
           <div class="filtros sub" id="subcategorias" hidden></div>
         </nav>
         <div class="cat-ajustes">
-          <label class="interruptor"><input type="checkbox" id="soloDisp"><span></span>Solo disponibles</label>
+          <div class="ajustes-izq">
+            <label class="buscador"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><input type="search" id="buscar" placeholder="Buscar: rosados, Nike, 38…" aria-label="Buscar en el catálogo" enterkeyhint="search"></label>
+            <label class="interruptor"><input type="checkbox" id="soloDisp"><span></span>Solo disponibles</label>
+            <label class="interruptor"><input type="checkbox" id="soloFavs"><span></span>Mis favoritos <b class="n-favs" id="nFavs"></b></label>
+          </div>
           <div class="ajustes-der">
           <select id="marca" aria-label="Marca"><option value="">Marca</option></select>
           <select id="orden" aria-label="Ordenar">
@@ -168,6 +186,10 @@
       <div class="ficha-acc">
         <button class="btn btn-prim" id="fichaAgregar" type="button">Agregar al carrito</button>
         <button class="btn btn-sec" id="fichaIg" type="button">Lo quiero · Instagram</button>
+        <div class="ficha-mini">
+          <button class="btn-texto" id="fichaFav" type="button"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7.5-4.4-7.5-10A4.3 4.3 0 0 1 12 7.3 4.3 4.3 0 0 1 19.5 10c0 5.6-7.5 10-7.5 10Z"/></svg><span>Guardar en favoritos</span></button>
+          <button class="btn-texto" id="fichaCompartir" type="button"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 12v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg><span>Compartir</span></button>
+        </div>
       </div>
       <p class="ficha-envio">🚚 Envío a toda Guatemala. El costo depende de tu ubicación. Sin devoluciones · <a href="#" data-politicas>ver políticas</a></p>
     </div>

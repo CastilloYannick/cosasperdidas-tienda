@@ -12,10 +12,12 @@
   const C = window.CP_CONFIG;
   const $ = s => document.querySelector(s);
   const CLAVE_CARRITO = 'cp-carrito';
+  const TITULO = document.title;
   const CHAT_IG = `https://ig.me/m/${C.INSTAGRAM_USUARIO}`;
 
   let productos = [];
-  let filtro = { cat: 'todo', marca: '', soloDisp: false, orden: 'destacados' };
+  let filtro = { cat: 'todo', marca: '', soloDisp: false, soloFavs: false, q: '', orden: 'destacados' };
+  let favs = new Set((() => { try { return JSON.parse(leer('cp-favs') || '[]'); } catch (e) { return []; } })());
   let vista = leer('cp-vista') || 'cuadricula';
   let carrito = leerCarrito();
   let actual = null, fotoIdx = 0;
@@ -135,7 +137,11 @@
   }
 
   function visibles() {
-    let l = productos.filter(p => enCat(p, filtro.cat) && (!filtro.marca || p.marca === filtro.marca) && (!filtro.soloDisp || vendible(p)));
+    const q = filtro.q.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    const coincide = p => !q || [p.nombre, p.marca, p.talla, p.descripcion, Datos.nombreCategoria(catDe(p))].join(' ')
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().includes(q);
+    let l = productos.filter(p => enCat(p, filtro.cat) && (!filtro.marca || p.marca === filtro.marca) && (!filtro.soloDisp || vendible(p)) &&
+      (!filtro.soloFavs || favs.has(p.id)) && coincide(p));
     const pf = p => Datos.precioFinal(p) ?? Infinity;
     if (filtro.orden === 'menor') l = l.slice().sort((a, b) => pf(a) - pf(b));
     else if (filtro.orden === 'mayor') l = l.slice().sort((a, b) => (Datos.precioFinal(b) ?? -1) - (Datos.precioFinal(a) ?? -1));
@@ -166,6 +172,7 @@
       const en = carrito.includes(p.id);
       return `<article class="tarjeta${p.estado === 'vendido' ? ' es-vendido' : ''}" style="--i:${i}" data-id="${esc(p.id)}">
         ${etiquetas(p)}
+        <button class="t-fav${favs.has(p.id) ? ' activo' : ''}" type="button" data-fav aria-pressed="${favs.has(p.id)}" aria-label="Guardar ${esc(p.nombre)} en favoritos"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7.5-4.4-7.5-10A4.3 4.3 0 0 1 12 7.3 4.3 4.3 0 0 1 19.5 10c0 5.6-7.5 10-7.5 10Z"/></svg></button>
         <button class="t-foto" type="button" data-abrir aria-label="Ver ${esc(p.nombre)}">
           ${f[0] ? `<img src="${esc(Datos.miniatura(f[0]))}" alt="${esc(p.nombre)}" loading="lazy" decoding="async">` : ''}
           ${f[1] ? `<img class="alt" src="${esc(Datos.miniatura(f[1]))}" alt="" loading="lazy" decoding="async">` : ''}
@@ -186,6 +193,41 @@
 
   function pintarContador() {
     Efectos.contar($('#cuentaDisp'), productos.filter(vendible).length, 900);
+  }
+
+  /* ---------- Favoritos (se guardan en este celular) ---------- */
+  function pintarFavs() {
+    $('#nFavs').textContent = favs.size ? favs.size : '';
+  }
+  function pintarFavFicha() {
+    if (!actual) return;
+    const on = favs.has(actual.id), b = $('#fichaFav');
+    b.classList.toggle('activo', on);
+    b.querySelector('span').textContent = on ? 'En tus favoritos' : 'Guardar en favoritos';
+  }
+  function alternarFav(id) {
+    const p = porId(id);
+    if (favs.has(id)) favs.delete(id); else favs.add(id);
+    try { localStorage.setItem('cp-favs', JSON.stringify([...favs])); } catch (e) {}
+    const on = favs.has(id);
+    document.querySelectorAll(`.tarjeta[data-id="${CSS.escape(id)}"] [data-fav]`).forEach(b => {
+      b.classList.toggle('activo', on);
+      b.setAttribute('aria-pressed', String(on));
+      if (on && !Efectos.reducido()) b.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.3)' }, { transform: 'scale(1)' }], { duration: 300, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' });
+    });
+    pintarFavs();
+    pintarFavFicha();
+    if (filtro.soloFavs) pintarRejilla();
+    Efectos.toast(on ? `Guardaste ${p.nombre} en favoritos 🤍` : 'Lo quitaste de favoritos');
+  }
+
+  /* ---------- Compartir un producto (ideal para historias de Instagram) ---------- */
+  async function compartir(p) {
+    const url = `${location.origin}${location.pathname}#p/${encodeURIComponent(p.id)}`;
+    const datos = { title: p.nombre, text: `Mira lo que encontré en cosas perdidas: ${p.nombre} 💌`, url };
+    if (navigator.share) { try { await navigator.share(datos); return; } catch (e) { if (e.name === 'AbortError') return; } }
+    const ok = await copiar(url);
+    Efectos.toast(ok ? 'Enlace copiado. Compártelo donde quieras 💌' : 'No pude copiar el enlace', { error: !ok });
   }
 
   /* ---------- Carrito ---------- */
@@ -299,6 +341,7 @@
     const p = porId(id);
     if (!p) return;
     actual = p; fotoIdx = 0;
+    document.title = `${p.nombre} · Cosas Perdidas`;
     $('#fichaMarca').textContent = p.marca || '';
     $('#fichaNombre').textContent = (p.emoji ? p.emoji + ' ' : '') + p.nombre;
     const pct = Datos.descuento(p);
@@ -322,6 +365,7 @@
     b.disabled = !ok;
     b.textContent = !ok ? (actual.estado === 'vendido' ? 'Ya se vendió' : 'Apartado') : en ? 'Quitar del carrito' : 'Agregar al carrito';
     $('#fichaIg').disabled = actual.estado === 'vendido';
+    pintarFavFicha();
   }
 
   function mostrarFoto(i, sinAnim) {
@@ -417,11 +461,20 @@
       Efectos.toast(ok ? 'Listo, copiado otra vez' : 'No pude copiarlo. Selecciona el texto y cópialo', { error: !ok });
     });
     $('#soloDisp').addEventListener('change', e => { filtro.soloDisp = e.target.checked; pintarRejilla(); });
+    $('#soloFavs').addEventListener('change', e => { filtro.soloFavs = e.target.checked; pintarRejilla(); });
+    let tBuscar = null;
+    $('#buscar').addEventListener('input', e => {
+      clearTimeout(tBuscar);
+      tBuscar = setTimeout(() => { filtro.q = e.target.value.trim(); pintarRejilla(); }, 160);
+    });
+    $('#fichaFav').addEventListener('click', () => alternarFav(actual.id));
+    $('#fichaCompartir').addEventListener('click', () => compartir(actual));
     $('#orden').addEventListener('change', e => { filtro.orden = e.target.value; pintarRejilla(); });
 
     $('#rejilla').addEventListener('click', e => {
       const t = e.target.closest('.tarjeta');
       if (!t) return;
+      if (e.target.closest('[data-fav]')) { alternarFav(t.dataset.id); return; }
       if (e.target.closest('[data-agregar]')) agregar(t.dataset.id, t.querySelector('.t-foto img'));
       else if (e.target.closest('[data-abrir]')) abrirFicha(t.dataset.id);
     });
@@ -442,7 +495,8 @@
       if (m) mostrarFoto(+m.dataset.foto);
     });
     ficha.addEventListener('cancel', e => { e.preventDefault(); cerrarDialogo(ficha); });
-    ficha.addEventListener('close', () => { if (location.hash.startsWith('#p/')) history.replaceState(null, '', location.pathname); });
+    ficha.addEventListener('close', () => {
+      document.title = TITULO; if (location.hash.startsWith('#p/')) history.replaceState(null, '', location.pathname); });
     $('#fotoGrande').addEventListener('click', e => {
       const b = e.currentTarget;
       if (b.dataset.deslizo) { delete b.dataset.deslizo; return; }
@@ -497,6 +551,7 @@
       return;
     }
     document.dispatchEvent(new CustomEvent('cp:productos', { detail: productos }));
+    pintarFavs();
     pintarMenu();
     pintarMosaico();
     pintarMarcas();

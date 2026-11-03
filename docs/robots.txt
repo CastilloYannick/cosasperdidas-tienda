@@ -1,2 +1,3 @@
 User-agent: *
 Disallow: /admin.html
+Sitemap: https://www.cosasperdidas.shop/sitemap.xml

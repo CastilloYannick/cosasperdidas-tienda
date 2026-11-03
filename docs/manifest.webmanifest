@@ -1,0 +1,19 @@
+{
+  "name": "Cosas Perdidas",
+  "short_name": "Cosas Perdidas",
+  "description": "Found by me, waiting for you. Tenis, tacones, ropa y accesorios elegidos uno por uno.",
+  "lang": "es",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fff8ed",
+  "theme_color": "#7d80da",
+  "icons": [
+    { "src": "img/icono-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "img/icono-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Sigue tu pedido", "url": "./#pedido/" },
+    { "name": "Panel", "url": "./admin.html" }
+  ]
+}

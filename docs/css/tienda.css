@@ -540,3 +540,28 @@ html, body { overflow-x: clip; }
 .politicas p { margin: 0; white-space: pre-line; color: var(--muted); font-size: 15px; line-height: 1.55; }
 .politicas .pol-devol { background: color-mix(in srgb, var(--rosa) 35%, var(--surface)); }
 .ficha-envio a, .car-nota a { color: var(--prim); font-weight: 700; }
+
+/* ============================================================
+   MEJORAS: buscador, favoritos y compartir
+   ============================================================ */
+.ajustes-izq { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; min-width: 0; }
+.buscador { position: relative; display: flex; align-items: center; flex: 1 1 220px; min-width: 0; }
+.buscador svg { position: absolute; left: 12px; color: var(--muted); pointer-events: none; }
+.buscador input { width: 100%; min-height: 42px; padding: 0 14px 0 38px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--surface); font: 600 15px var(--f-texto); color: var(--ink);
+  transition: border-color var(--dur-ui) ease, box-shadow var(--dur-ui) ease; }
+.buscador input:focus { outline: none; border-color: var(--lavanda); box-shadow: 0 0 0 4px color-mix(in srgb, var(--lavanda) 22%, transparent); }
+.n-favs { min-width: 20px; padding: 0 6px; border-radius: 999px; background: var(--rosa); color: #3e4d3d; font-size: 12px; text-align: center; }
+.n-favs:empty { display: none; }
+.t-fav { position: absolute; top: 10px; right: 10px; z-index: 2; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 248, 237, .92); color: #3e4d3d;
+  box-shadow: 0 2px 10px rgba(30, 26, 50, .12); transition: transform var(--dur-pulsar) var(--ease-out), color var(--dur-ui) ease; }
+.t-fav:active { transform: scale(.88); }
+.t-fav.activo { color: var(--oferta); }
+.t-fav.activo svg, #fichaFav.activo svg { fill: currentColor; }
+.ficha-mini { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; }
+.ficha-mini .btn-texto { display: inline-flex; align-items: center; gap: 6px; padding: 0 12px; }
+#fichaFav.activo { color: var(--oferta); }
+@media (max-width: 640px) {
+  .rejilla:not(.en-lista) .t-fav { width: 32px; height: 32px; top: 6px; right: 6px; }
+  .rejilla:not(.en-lista) .t-fav svg { width: 16px; height: 16px; }
+  .buscador { flex-basis: 100%; }
+}

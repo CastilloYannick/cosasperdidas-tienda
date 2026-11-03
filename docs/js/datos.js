@@ -39,7 +39,14 @@ const Datos = (function () {
     return ordenar(await r.json());
   }
 
+  const CATORCE_DIAS = 14 * 864e5;
+  const marcarNuevos = lista => lista.map(p => ({ ...p, nuevo: !!p.creado && Date.now() - new Date(p.creado).getTime() < CATORCE_DIAS }));
+
   async function listar() {
+    return marcarNuevos(await listarBase());
+  }
+
+  async function listarBase() {
     if (OFF) return ordenar(OFF.productos || []);
     if (!sb) return local();
     const { data, error } = await sb.from('productos').select('*').order('orden', { ascending: true });
