@@ -76,7 +76,8 @@
 
   /* ---------- Mosaico de categorías ----------
      Cada cuadro usa la primera foto de un producto de esa categoría; si
-     todavía no hay productos, muestra una ilustración con "Pronto". */
+     todavía no hay productos, usa una foto de portada (img/cat) o una ilustración. */
+  const PORTADAS = ['ropa', 'ropa-ninos', 'ropa-ninas', 'accesorios', 'charms', 'carteras', 'salud'];
   const ILUSTRACION = {
     ropa: '<path d="M9 4 4.5 6.5 6 10.5l2-1V20h8V9.5l2 1 1.5-4L15 4c-.5 1.4-1.6 2.2-3 2.2S9.5 5.4 9 4Z"/>',
     'ropa-ninos': '<path d="M9 4 4.5 6.5 6 10.5l2-1V20h8V9.5l2 1 1.5-4L15 4c-.5 1.4-1.6 2.2-3 2.2S9.5 5.4 9 4Z"/><path d="M8 13h8"/>',
@@ -95,7 +96,8 @@
   function fotoDe(cat) {
     const p = productos.find(p => enCat(p, cat) && p.estado !== 'vendido' && (p.fotos || [])[0]) ||
       productos.find(p => enCat(p, cat) && (p.fotos || [])[0]);
-    return p ? Datos.miniatura(p.fotos[0]) : null;
+    if (p) return Datos.miniatura(p.fotos[0]);
+    return PORTADAS.includes(cat) ? `img/cat/${cat}.webp` : null;
   }
 
   function cuadro(id, nombre, i, conSubs) {
@@ -104,7 +106,7 @@
       : `<span class="m-ilus" style="--fondo:${FONDOS[i % FONDOS.length]}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ILUSTRACION[id] || ILUSTRACION.accesorios}</svg></span>`;
     return `<button class="m-cuadro${foto ? '' : ' sin-foto'}" type="button" data-mosaico="${esc(id)}" style="--i:${i}"${conSubs ? ' aria-haspopup="true"' : ''}>
       ${fondo}<span class="m-nombre">${esc(nombre)}</span>
-      <span class="m-cuenta">${n ? `${n} ${n === 1 ? 'pieza' : 'piezas'}` : 'Pronto'}${conSubs ? ' ›' : ''}</span>
+      ${n || conSubs ? `<span class="m-cuenta">${n ? `${n} ${n === 1 ? 'pieza' : 'piezas'}` : 'Ver'}${conSubs ? ' ›' : ''}</span>` : ''}
     </button>`;
   }
 

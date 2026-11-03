@@ -1,0 +1,5 @@
+const sharp=require('sharp'),fs=require('fs');const c=JSON.parse(fs.readFileSync('cand.json'));const out=process.argv[2];
+(async()=>{const W=200,H=200,rows=Object.keys(c);const comps=[];let y=0;
+for(const k of rows){const lbl=Buffer.from(`<svg width="120" height="${H}"><rect width="100%" height="100%" fill="#fff"/><text x="4" y="100" font-size="18" font-family="Arial">${k}</text></svg>`);comps.push({input:lbl,left:0,top:y});
+for(let i=0;i<c[k].length;i++){try{const r=await fetch(`https://images.unsplash.com/photo-${c[k][i]}?w=300&q=60`);const b=Buffer.from(await r.arrayBuffer());const t=await sharp(b).resize(W,H-20,{fit:'cover'}).toBuffer();comps.push({input:t,left:120+i*W,top:y});comps.push({input:Buffer.from(`<svg width="${W}" height="20"><rect width="100%" height="100%" fill="#fff"/><text x="4" y="15" font-size="14" font-family="Arial">${i}</text></svg>`),left:120+i*W,top:y+H-20});}catch(e){console.log('fail',k,i)}}y+=H;}
+await sharp({create:{width:120+8*W,height:y,channels:3,background:'#ddd'}}).composite(comps).jpeg({quality:70}).toFile(out);console.log('ok')})();
