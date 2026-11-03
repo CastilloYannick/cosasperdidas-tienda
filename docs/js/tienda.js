@@ -15,7 +15,8 @@
   const CHAT_IG = `https://ig.me/m/${C.INSTAGRAM_USUARIO}`;
 
   let productos = [];
-  let filtro = { marca: 'Todas', soloDisp: false, orden: 'destacados' };
+  let filtro = { cat: 'todo', marca: '', soloDisp: false, orden: 'destacados' };
+  let vista = leer('cp-vista') || 'cuadricula';
   let carrito = leerCarrito();
   let actual = null, fotoIdx = 0;
 
@@ -24,6 +25,8 @@
   const vendible = p => p && p.estado === 'disponible';
 
   /* ---------- Carrito en localStorage (puede fallar en modo privado) ---------- */
+  function leer(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+
   function leerCarrito() {
     try { return JSON.parse(localStorage.getItem(CLAVE_CARRITO)) || []; } catch (e) { return []; }
   }
@@ -50,21 +53,47 @@
     return e.length ? `<div class="etiquetas">${e.join('')}</div>` : '';
   }
 
-  /* ---------- Filtros ---------- */
-  function pintarFiltros() {
-    const marcas = ['Todas', ...new Set(productos.map(p => p.marca || 'Otros'))];
-    const cuenta = m => (m === 'Todas' ? productos.length : productos.filter(p => (p.marca || 'Otros') === m).length);
-    $('#filtros').innerHTML = marcas.map(m =>
-      `<button class="chip" type="button" data-marca="${esc(m)}" aria-pressed="${m === filtro.marca}">${esc(m)}<small>${cuenta(m)}</small></button>`).join('');
+  /* ---------- Menú de categorías y filtros ---------- */
+  const catDe = p => p.categoria || 'casuales';
+  const enCat = (p, cat) => cat === 'todo' || catDe(p) === cat || Datos.padreDe(catDe(p)) === cat;
+  const chip = (id, nombre, n, activo) =>
+    `<button class="chip" type="button" data-cat="${esc(id)}" aria-pressed="${activo}">${esc(nombre)}${n != null ? `<small>${n}</small>` : ''}</button>`;
+
+  function pintarMenu() {
+    const cuenta = cat => productos.filter(p => enCat(p, cat)).length;
+    const padre = filtro.cat === 'todo' ? 'todo' : Datos.padreDe(filtro.cat);
+    $('#categorias').innerHTML = chip('todo', 'Todo', productos.length, padre === 'todo') +
+      Datos.CATEGORIAS.map(c => chip(c.id, c.nombre, cuenta(c.id), padre === c.id)).join('');
+    // Subventana: aparece al elegir Ropa o Accesorios
+    const c = Datos.CATEGORIAS.find(x => x.id === padre);
+    const sub = $('#subcategorias');
+    if (c && c.subs && !(c.subs.length === 1 && c.subs[0].id === c.id)) {
+      sub.innerHTML = chip(c.id, 'Todo ' + c.nombre.toLowerCase(), null, filtro.cat === c.id) +
+        c.subs.map(s => chip(s.id, s.nombre, cuenta(s.id), filtro.cat === s.id)).join('');
+      if (sub.hidden) { sub.hidden = false; sub.classList.remove('abre'); void sub.offsetWidth; sub.classList.add('abre'); }
+    } else sub.hidden = true;
+  }
+
+  function pintarMarcas() {
+    const marcas = [...new Set(productos.map(p => p.marca).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+    $('#marca').innerHTML = '<option value="">Todas las marcas</option>' + marcas.map(m => `<option>${esc(m)}</option>`).join('');
+    $('#marca').hidden = marcas.length < 2;
   }
 
   function visibles() {
-    let l = productos.filter(p => (filtro.marca === 'Todas' || (p.marca || 'Otros') === filtro.marca) && (!filtro.soloDisp || vendible(p)));
+    let l = productos.filter(p => enCat(p, filtro.cat) && (!filtro.marca || p.marca === filtro.marca) && (!filtro.soloDisp || vendible(p)));
     const pf = p => Datos.precioFinal(p) ?? Infinity;
     if (filtro.orden === 'menor') l = l.slice().sort((a, b) => pf(a) - pf(b));
     else if (filtro.orden === 'mayor') l = l.slice().sort((a, b) => (Datos.precioFinal(b) ?? -1) - (Datos.precioFinal(a) ?? -1));
     // Lo vendido siempre al final, para que no estorbe
     return l.slice().sort((a, b) => (a.estado === 'vendido') - (b.estado === 'vendido'));
+  }
+
+  function ponerVista(v) {
+    vista = v;
+    $('#rejilla').classList.toggle('en-lista', v === 'lista');
+    document.querySelectorAll('[data-vista]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.vista === v)));
+    try { localStorage.setItem('cp-vista', v); } catch (e) {}
   }
 
   /* ---------- Rejilla ---------- */
@@ -74,7 +103,8 @@
   function pintarRejilla() {
     const l = visibles();
     if (!l.length) {
-      $('#rejilla').innerHTML = '<p class="vacio"><b>Nada por aquí todavía</b>Prueba con otra marca o quita el filtro de disponibles.</p>';
+      const salud = Datos.padreDe(filtro.cat) === 'salud' ? ' Pronto tendré vitaminas por aquí.' : '';
+      $('#rejilla').innerHTML = `<p class="vacio"><b>Aún no encuentro nada para esta sección</b>Estoy buscando piezas nuevas para ti.${salud} Mientras tanto, mira las otras categorías.</p>`;
       return;
     }
     $('#rejilla').innerHTML = l.map((p, i) => {
@@ -87,8 +117,9 @@
           ${f[1] ? `<img class="alt" src="${esc(Datos.miniatura(f[1]))}" alt="" loading="lazy" decoding="async">` : ''}
         </button>
         <div class="t-cuerpo">
-          <span class="t-marca">${esc(p.marca || '')}</span>
+          <span class="t-marca">${esc([p.marca, Datos.nombreCategoria(catDe(p))].filter(Boolean).join(' · '))}</span>
           <span class="t-nombre">${esc(p.emoji ? p.emoji + ' ' : '')}${esc(p.nombre)}</span>
+          ${p.talla ? `<span class="t-talla">${esc(p.talla)}</span>` : ''}
           <div class="t-pie">
             ${htmlPrecio(p)}
             <button class="t-agregar${en ? ' en' : ''}" type="button" data-agregar ${vendible(p) ? '' : 'disabled'}
@@ -175,8 +206,9 @@
   }
 
   /* ---------- Pedido por Instagram ----------
-     Instagram no permite precargar texto en un mensaje directo, así que
-     copiamos el pedido al portapapeles y abrimos el chat de la tienda. */
+     Instagram no permite precargar texto en un mensaje directo (los enlaces
+     ig.me no aceptan texto), así que copio el pedido y una ventana guía
+     a pegarlo en el chat antes de abrirlo. */
   function mensajePedido(items) {
     const lineas = items.map(p => `• ${p.nombre} (${Datos.dinero(Datos.precioFinal(p))})`);
     const conPrecio = items.filter(p => Datos.precioFinal(p) != null);
@@ -198,11 +230,14 @@
 
   async function pedir(items) {
     if (!items.length) return;
-    // La pestaña se abre de inmediato (dentro del clic) para que el navegador no la bloquee
-    const ventana = window.open('about:blank', '_blank');
-    const ok = await copiar(mensajePedido(items));
-    if (ventana) ventana.location.href = CHAT_IG; else location.href = CHAT_IG;
-    Efectos.toast(ok ? 'Mensaje copiado. Pégalo en el chat de Instagram y envíalo 💌' : 'Abrimos Instagram. Cuéntanos qué pares te gustaron 💌', { duracion: 7000 });
+    const txt = mensajePedido(items);
+    $('#pedidoTxt').textContent = txt;
+    $('#pedidoAbrir').href = CHAT_IG;
+    const ok = await copiar(txt);
+    $('#pedidoTitulo').textContent = ok ? 'Tu pedido ya está copiado 💌' : 'Copia tu pedido 💌';
+    if ($('#carrito').classList.contains('abierto')) cerrarCarrito();
+    if ($('#ficha').open) $('#ficha').close();
+    $('#pedido').showModal();
   }
 
   /* ---------- Ficha de producto ---------- */
@@ -217,7 +252,8 @@
     $('#fichaDesc').textContent = p.descripcion || '';
     const estados = { disponible: 'Disponible', apartado: 'Apartado', vendido: 'Vendido' };
     $('#fichaDatos').innerHTML = `<dt>Estado</dt><dd>${estados[p.estado] || p.estado}</dd>` +
-      `<dt>Talla</dt><dd>${esc(p.talla || 'Pregúntanos por Instagram')}</dd>`;
+      `<dt>Talla</dt><dd>${esc(p.talla || 'Pregúntame por Instagram')}</dd>` +
+      `<dt>Categoría</dt><dd>${esc(Datos.nombreCategoria(catDe(p)) || '—')}</dd>`;
     $('#miniaturas').innerHTML = (p.fotos || []).map((f, i) =>
       `<button type="button" data-foto="${i}" aria-label="Foto ${i + 1}"><img src="${esc(Datos.miniatura(f))}" alt="" loading="lazy"></button>`).join('');
     mostrarFoto(0, true);
@@ -296,12 +332,26 @@
 
   /* ---------- Eventos ---------- */
   function conectar() {
-    $('#filtros').addEventListener('click', e => {
-      const b = e.target.closest('[data-marca]');
+    $('.menu-cat').addEventListener('click', e => {
+      const b = e.target.closest('[data-cat]');
       if (!b) return;
-      filtro.marca = b.dataset.marca;
-      document.querySelectorAll('#filtros .chip').forEach(c => c.setAttribute('aria-pressed', String(c === b)));
+      filtro.cat = b.dataset.cat;
+      pintarMenu();
       pintarRejilla();
+    });
+    $('#marca').addEventListener('change', e => { filtro.marca = e.target.value; pintarRejilla(); });
+    $('.vista').addEventListener('click', e => {
+      const b = e.target.closest('[data-vista]');
+      if (b && b.dataset.vista !== vista) { ponerVista(b.dataset.vista); pintarRejilla(); }
+    });
+
+    const pedido = $('#pedido');
+    pedido.addEventListener('click', e => { if (e.target === pedido || e.target.closest('[data-cerrar]')) cerrarDialogo(pedido); });
+    pedido.addEventListener('cancel', e => { e.preventDefault(); cerrarDialogo(pedido); });
+    $('#pedidoAbrir').addEventListener('click', () => setTimeout(() => cerrarDialogo(pedido), 400));
+    $('#pedidoCopiar').addEventListener('click', async () => {
+      const ok = await copiar($('#pedidoTxt').textContent);
+      Efectos.toast(ok ? 'Listo, copiado otra vez' : 'No pude copiarlo. Selecciona el texto y cópialo', { error: !ok });
     });
     $('#soloDisp').addEventListener('change', e => { filtro.soloDisp = e.target.checked; pintarRejilla(); });
     $('#orden').addEventListener('change', e => { filtro.orden = e.target.value; pintarRejilla(); });
@@ -383,7 +433,9 @@
       $('#rejilla').innerHTML = '<p class="vacio"><b>No pudimos cargar el catálogo</b>Revisa tu conexión y recarga la página.</p>';
       return;
     }
-    pintarFiltros();
+    pintarMenu();
+    pintarMarcas();
+    ponerVista(vista);
     pintarRejilla();
     pintarCarrito();
     pintarContador();

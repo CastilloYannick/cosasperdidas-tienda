@@ -4,116 +4,178 @@
     "nombre": "Puma en color gris claro",
     "marca": "Puma",
     "emoji": "🩶",
-    "descripcion": "Gris clarito con detalle plateado en el talón. Combinan con todo: jeans, faldas o pants. De esos tenis que terminas usando toda la semana.",
+    "categoria": "casuales",
+    "descripcion": "Si te gustan los tenis neutros y fáciles de combinar, ¡estos son para ti!\n\nDiseño clásico en gris claro con detalles plateados que le dan un toque elegante a cualquier outfit. Ideales para el día a día y para crear looks casuales.",
     "precio": 600,
     "precio_oferta": null,
-    "talla": "",
+    "talla": "EU 37.5 · US Women 7 · 23.5 cm",
     "estado": "disponible",
     "orden": 1,
-    "fotos": ["img/p/puma-gris-claro-1.webp", "img/p/puma-gris-claro-2.webp", "img/p/puma-gris-claro-3.webp", "img/p/puma-gris-claro-4.webp", "img/p/puma-gris-claro-5.webp"]
+    "fotos": [
+      "img/p/puma-gris-claro-1.webp",
+      "img/p/puma-gris-claro-2.webp",
+      "img/p/puma-gris-claro-3.webp",
+      "img/p/puma-gris-claro-4.webp",
+      "img/p/puma-gris-claro-5.webp"
+    ]
   },
   {
     "id": "puma-rosados",
     "nombre": "Puma rosados",
     "marca": "Puma",
     "emoji": "🎀",
-    "descripcion": "Rosado pastel con blanco y suela de plataforma. Dulces, cómodos y con ese toque retro que se ve lindo en fotos.",
+    "categoria": "casuales",
+    "descripcion": "¡Mira qué linda combinación de colores! 😍 Rosado pastel, blanco y detalles dorados para darle un toque delicado y moderno a tus outfits.\n\n✨ Ideales para combinar con jeans, vestidos y looks casuales.",
     "precio": 550,
     "precio_oferta": null,
-    "talla": "",
+    "talla": "EU 38.5 · 24.5 cm",
     "estado": "disponible",
     "orden": 2,
-    "fotos": ["img/p/puma-rosados-1.webp", "img/p/puma-rosados-2.webp", "img/p/puma-rosados-3.webp", "img/p/puma-rosados-4.webp", "img/p/puma-rosados-5.webp"]
+    "fotos": [
+      "img/p/puma-rosados-1.webp",
+      "img/p/puma-rosados-2.webp",
+      "img/p/puma-rosados-3.webp",
+      "img/p/puma-rosados-4.webp",
+      "img/p/puma-rosados-5.webp"
+    ]
   },
   {
     "id": "reebok-classic-crema-rosado",
     "nombre": "Reebok Classic en crema y rosado",
     "marca": "Reebok",
     "emoji": "🌸",
-    "descripcion": "Un clásico de siempre en crema con detalles rosados. Suela gruesa, estilo vintage y muy fáciles de combinar.",
+    "categoria": "casuales",
+    "descripcion": "¿Te gustan los tenis con un estilo clásico y delicado? ¡Mira esta combinación! ✨\n\nSu tono crema con detalles rosados es perfecto para complementar tus outfits casuales y darle un toque diferente a tu estilo. 🌷",
     "precio": 500,
     "precio_oferta": null,
-    "talla": "",
+    "talla": "US 8 · UK 5.5 · EU 38.5 · 25 cm",
     "estado": "disponible",
     "orden": 3,
-    "fotos": ["img/p/reebok-classic-crema-rosado-1.webp", "img/p/reebok-classic-crema-rosado-2.webp", "img/p/reebok-classic-crema-rosado-3.webp", "img/p/reebok-classic-crema-rosado-4.webp", "img/p/reebok-classic-crema-rosado-5.webp"]
+    "fotos": [
+      "img/p/reebok-classic-crema-rosado-1.webp",
+      "img/p/reebok-classic-crema-rosado-2.webp",
+      "img/p/reebok-classic-crema-rosado-3.webp",
+      "img/p/reebok-classic-crema-rosado-4.webp",
+      "img/p/reebok-classic-crema-rosado-5.webp"
+    ]
   },
   {
     "id": "nike-negros-verde-neon",
     "nombre": "Nike negros con verde neón",
     "marca": "Nike",
     "emoji": "💚",
-    "descripcion": "Negros con jaladeras verde neón y suela moteada. Para el día a día o para salir a caminar, con un detalle que llama la atención.",
+    "categoria": "deportivos",
+    "descripcion": "¿Buscas unos tenis con un diseño deportivo y diferente? ¡Mira este par! ✨\n\nSu combinación de negro, verde neón y blanco les da un estilo moderno, perfecto para combinar con tus outfits casuales y deportivos.",
     "precio": 500,
     "precio_oferta": null,
-    "talla": "",
+    "talla": "US 6.5Y · UK 5.5 · EU 38.5 · 24 cm",
     "estado": "disponible",
     "orden": 4,
-    "fotos": ["img/p/nike-negros-verde-neon-1.webp", "img/p/nike-negros-verde-neon-2.webp", "img/p/nike-negros-verde-neon-3.webp", "img/p/nike-negros-verde-neon-4.webp", "img/p/nike-negros-verde-neon-5.webp", "img/p/nike-negros-verde-neon-6.webp", "img/p/nike-negros-verde-neon-7.webp"]
+    "fotos": [
+      "img/p/nike-negros-verde-neon-1.webp",
+      "img/p/nike-negros-verde-neon-2.webp",
+      "img/p/nike-negros-verde-neon-3.webp",
+      "img/p/nike-negros-verde-neon-4.webp",
+      "img/p/nike-negros-verde-neon-5.webp",
+      "img/p/nike-negros-verde-neon-6.webp",
+      "img/p/nike-negros-verde-neon-7.webp"
+    ]
   },
   {
     "id": "puma-negros-dorado",
     "nombre": "Tenis Puma negros con dorado",
     "marca": "Puma",
     "emoji": "🖤",
-    "descripcion": "Negros de piel con el logo dorado y suela blanca. Elegantes, limpios y fáciles de cuidar.",
+    "categoria": "casuales",
+    "descripcion": "¿Buscas unos tenis fáciles de combinar y con un estilo clásico? Estos Puma negros con detalles dorados y suela blanca pueden ser una excelente opción para tus outfits diarios. 🤍",
     "precio": 500,
     "precio_oferta": null,
-    "talla": "",
+    "talla": "EU 39 · US 7 · UK 6 · 25 cm",
     "estado": "disponible",
     "orden": 5,
-    "fotos": ["img/p/puma-negros-dorado-1.webp", "img/p/puma-negros-dorado-2.webp", "img/p/puma-negros-dorado-3.webp", "img/p/puma-negros-dorado-4.webp"]
+    "fotos": [
+      "img/p/puma-negros-dorado-1.webp",
+      "img/p/puma-negros-dorado-2.webp",
+      "img/p/puma-negros-dorado-3.webp",
+      "img/p/puma-negros-dorado-4.webp"
+    ]
   },
   {
     "id": "nike-deportivos",
     "nombre": "Nike deportivos",
     "marca": "Nike",
     "emoji": "🧡",
-    "descripcion": "Blancos con swoosh morado y detalles naranja. Ligeros y acolchonados, ideales para correr, ir al gym o caminar mucho.",
+    "categoria": "deportivos",
+    "descripcion": "¡Mira esta combinación de colores!\n\nEstos Nike blancos con detalles oscuros y naranja son ideales para darle un toque diferente a tus outfits deportivos y casuales.",
     "precio": 500,
     "precio_oferta": null,
-    "talla": "",
+    "talla": "US 6 · EU 36.5 · 23 cm",
     "estado": "disponible",
     "orden": 6,
-    "fotos": ["img/p/nike-deportivos-1.webp", "img/p/nike-deportivos-2.webp", "img/p/nike-deportivos-3.webp", "img/p/nike-deportivos-4.webp", "img/p/nike-deportivos-5.webp", "img/p/nike-deportivos-6.webp"]
+    "fotos": [
+      "img/p/nike-deportivos-1.webp",
+      "img/p/nike-deportivos-2.webp",
+      "img/p/nike-deportivos-3.webp",
+      "img/p/nike-deportivos-4.webp",
+      "img/p/nike-deportivos-5.webp",
+      "img/p/nike-deportivos-6.webp"
+    ]
   },
   {
     "id": "new-balance-grises",
     "nombre": "New Balance grises",
     "marca": "New Balance",
     "emoji": "🩶",
-    "descripcion": "Gris claro en malla transpirable con suela blanca acolchonada. Comodidad total para todo el día.",
+    "categoria": "deportivos",
+    "descripcion": "¿Buscas unos tenis en tonos neutros que puedas combinar fácilmente? ¡Estos pueden ser para ti! ✨\n\nSu diseño deportivo en gris claro con blanco es perfecto para un look casual, salir o complementar tus outfits diarios.\n\n👟 Modelo: New Balance 860",
     "precio": 600,
     "precio_oferta": null,
-    "talla": "",
+    "talla": "Talla 7 · plantilla aprox. 24 cm",
     "estado": "disponible",
     "orden": 7,
-    "fotos": ["img/p/new-balance-grises-1.webp", "img/p/new-balance-grises-2.webp", "img/p/new-balance-grises-3.webp", "img/p/new-balance-grises-4.webp"]
+    "fotos": [
+      "img/p/new-balance-grises-1.webp",
+      "img/p/new-balance-grises-2.webp",
+      "img/p/new-balance-grises-3.webp",
+      "img/p/new-balance-grises-4.webp"
+    ]
   },
   {
     "id": "adidas-gazelle-verde-petroleo",
     "nombre": "Adidas Gazelle verde petróleo",
     "marca": "Adidas",
     "emoji": "💚",
-    "descripcion": "Las Gazelle en verde petróleo con rayas crema y suela de goma color miel. Un ícono retro que nunca pasa de moda.",
+    "categoria": "casuales",
+    "descripcion": "¡Un color que hará destacar tus outfits!\n\nAdidas Gazelle en un hermoso tono verde petróleo, con las icónicas tres franjas color crema y suela caramelo. Un diseño versátil, ideal para combinar con jeans, pantalones casuales y looks en tonos neutros.\n\n✔️ Originales de outlet con etiquetas",
     "precio": 630,
     "precio_oferta": null,
-    "talla": "",
+    "talla": "US 4.5 · UK 4 · EU 36⅔ · 23 cm",
     "estado": "disponible",
     "orden": 8,
-    "fotos": ["img/p/adidas-gazelle-verde-petroleo-1.webp", "img/p/adidas-gazelle-verde-petroleo-2.webp", "img/p/adidas-gazelle-verde-petroleo-3.webp", "img/p/adidas-gazelle-verde-petroleo-4.webp", "img/p/adidas-gazelle-verde-petroleo-5.webp"]
+    "fotos": [
+      "img/p/adidas-gazelle-verde-petroleo-1.webp",
+      "img/p/adidas-gazelle-verde-petroleo-2.webp",
+      "img/p/adidas-gazelle-verde-petroleo-3.webp",
+      "img/p/adidas-gazelle-verde-petroleo-4.webp",
+      "img/p/adidas-gazelle-verde-petroleo-5.webp"
+    ]
   },
   {
     "id": "sandalias-blancas-tacon",
     "nombre": "Sandalias blancas de tacón",
     "marca": "Otros",
     "emoji": "🤍",
+    "categoria": "tacones",
     "descripcion": "Sandalias blancas con tacón cuadrado y listón para amarrar al tobillo. Perfectas para una salida o un evento.",
     "precio": null,
     "precio_oferta": null,
     "talla": "",
     "estado": "disponible",
     "orden": 9,
-    "fotos": ["img/p/sandalias-blancas-tacon-1.webp", "img/p/sandalias-blancas-tacon-2.webp", "img/p/sandalias-blancas-tacon-3.webp"]
+    "fotos": [
+      "img/p/sandalias-blancas-tacon-1.webp",
+      "img/p/sandalias-blancas-tacon-2.webp",
+      "img/p/sandalias-blancas-tacon-3.webp"
+    ]
   }
 ]

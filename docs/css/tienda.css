@@ -316,3 +316,63 @@ dialog::backdrop { background: rgba(30, 26, 50, .55); backdrop-filter: blur(4px)
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   [data-revela] { opacity: 1; transform: none; }
 }
+
+/* ============================================================
+   MENÚ DE CATEGORÍAS, VISTA LISTA / CUADRÍCULA Y PEDIDO
+   ============================================================ */
+.menu-cat { position: sticky; top: 66px; z-index: 10; display: grid; gap: 8px; margin: 0 calc(-1 * max(16px, 4vw)); padding: 10px max(16px, 4vw);
+  background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.filtros.sub { padding-left: 14px; border-left: 3px solid var(--malva); }
+.filtros.sub .chip { min-height: 36px; font-size: 14px; background: var(--surface-2); }
+.filtros.sub .chip[aria-pressed="true"] { background: var(--malva); border-color: var(--malva); color: #3e4d3d; }
+.filtros[hidden] { display: none; }
+.filtros.sub.abre { animation: sube 240ms var(--ease-out); }
+.ajustes-der { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ajustes-der select[hidden] { display: none; }
+.vista { display: inline-flex; padding: 3px; gap: 2px; border-radius: 13px; border: 1.5px solid var(--line); background: var(--surface); }
+.vista button { width: 38px; height: 34px; border-radius: 9px; display: grid; place-items: center; color: var(--muted); transition: background-color var(--dur-ui) ease, color var(--dur-ui) ease, transform var(--dur-pulsar) var(--ease-out); }
+.vista button:active { transform: scale(.94); }
+.vista button[aria-pressed="true"] { background: var(--prim); color: var(--prim-ink); }
+.t-talla { font-size: 13px; color: var(--muted); font-weight: 600; }
+
+/* Cuadrícula de dos en dos en el celular */
+@media (max-width: 640px) {
+  .rejilla:not(.en-lista) { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .rejilla:not(.en-lista) .t-cuerpo { padding: 10px 11px 12px; }
+  .rejilla:not(.en-lista) .t-nombre { font-size: 15.5px; }
+  .rejilla:not(.en-lista) .t-marca { font-size: 10.5px; letter-spacing: .1em; }
+  .rejilla:not(.en-lista) .t-talla { display: none; }
+  .rejilla:not(.en-lista) .precio { font-size: 15px; }
+  .rejilla:not(.en-lista) .precio s { display: block; margin: 0; font-size: 12.5px; }
+  .rejilla:not(.en-lista) .t-agregar { width: 38px; height: 38px; }
+  .rejilla:not(.en-lista) .etiquetas { top: 8px; left: 8px; }
+  .rejilla:not(.en-lista) .etq { font-size: 11px; padding: 4px 8px; }
+  .cat-ajustes { align-items: flex-start; }
+}
+
+/* Vista de lista: foto a la izquierda, datos a la derecha */
+.rejilla.en-lista { grid-template-columns: 1fr; gap: 12px; max-width: 860px; margin: 0 auto; }
+.rejilla.en-lista .tarjeta { flex-direction: row; }
+.rejilla.en-lista .t-foto { width: clamp(118px, 26vw, 200px); flex-shrink: 0; aspect-ratio: 4 / 5; }
+.rejilla.en-lista .t-cuerpo { padding: 14px 16px; justify-content: center; }
+.rejilla.en-lista .etiquetas { top: 8px; left: 8px; }
+.rejilla.en-lista .esqueleto { aspect-ratio: auto; height: 160px; }
+
+.ficha-envio { margin: 0; font-size: 14px; color: var(--muted); text-align: center; }
+
+/* Ventana del pedido por Instagram */
+.pedido { width: min(440px, calc(100vw - 24px)); border-radius: 28px; background: var(--surface); padding: 30px 24px 22px; text-align: center; }
+.pedido[open] { display: grid; gap: 14px; animation: abre 260ms var(--ease-out); }
+.pedido.cerrando { animation: cierra 180ms ease forwards; }
+.pedido h3 { font-size: 27px; }
+.pedido-flor { width: 46px; height: 46px; margin: 0 auto; animation: gira 14s linear infinite; }
+.pedido-txt { margin: 0; padding: 14px 16px; border-radius: 16px; background: var(--surface-2); text-align: left; white-space: pre-wrap; font: 600 14.5px/1.5 var(--f-texto); max-height: 30vh; overflow: auto; user-select: all; }
+.pedido-pasos { margin: 0; padding-left: 22px; text-align: left; display: grid; gap: 6px; font-size: 15px; color: var(--muted); }
+.pedido-pasos b { color: var(--ink); }
+.btn-texto { min-height: 40px; font-weight: 700; font-size: 14.5px; color: var(--prim); border-radius: 12px; }
+.btn-texto:hover { background: var(--surface-2); }
+@media (max-width: 640px) {
+  .ajustes-der { width: 100%; flex-wrap: nowrap; }
+  .ajustes-der select { flex: 1; min-width: 0; padding-right: 30px; background-position: right 10px center; }
+  .menu-cat { top: 62px; }
+}

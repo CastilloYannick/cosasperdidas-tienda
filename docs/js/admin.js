@@ -14,7 +14,7 @@
   const ESTADOS = { disponible: 'Disponible', apartado: 'Apartado', vendido: 'Vendido' };
 
   let productos = [];
-  let ver = 'todos', texto = '';
+  let ver = 'todos', texto = '', verCat = '';
   let editando = null, fotosEd = [], subiendo = 0;
 
   const numero = v => (v === '' || v == null ? null : Math.max(0, Math.round(Number(v))));
@@ -22,6 +22,17 @@
 
   /* ---------- Sesión ---------- */
   async function iniciar() {
+    // Opciones de categoría (agrupadas como en el menú de la tienda)
+    const opciones = Datos.CATEGORIAS.map(c => c.subs
+      ? `<optgroup label="${esc(c.nombre)}">${c.subs.map(s => `<option value="${s.id}">${esc(Datos.nombreCategoria(s.id))}</option>`).join('')}</optgroup>`
+      : `<option value="${c.id}">${esc(c.nombre)}</option>`).join('');
+    $('#edCategoria').innerHTML = opciones;
+    $('#verCategoria').insertAdjacentHTML('beforeend', opciones);
+    if (Datos.enPrueba) {
+      $('#avisoPrueba').hidden = false;
+      entrarAlPanel();
+      return;
+    }
     if (!Datos.conSupabase) {
       $('#avisoConfig').hidden = false;
       $('#vistaEntrada').hidden = false;
@@ -71,13 +82,13 @@
   function pintar() {
     pintarResumen();
     const q = texto.toLowerCase();
-    const l = productos.filter(p => (ver === 'todos' || p.estado === ver) &&
+    const l = productos.filter(p => (ver === 'todos' || p.estado === ver) && (!verCat || (p.categoria || 'casuales') === verCat) &&
       (!q || `${p.nombre} ${p.marca}`.toLowerCase().includes(q)));
     if (!l.length) {
       $('#lista').innerHTML = `<li class="lista-vacia">${productos.length ? 'Nada coincide con ese filtro.' : 'Aún no hay productos. Crea el primero con “Nuevo producto”.'}</li>`;
       return;
     }
-    const ordenables = ver === 'todos' && !q;
+    const ordenables = ver === 'todos' && !q && !verCat;
     $('#lista').innerHTML = l.map((p, i) => {
       const pct = Datos.descuento(p);
       const final = Datos.precioFinal(p);
@@ -86,7 +97,7 @@
         <div class="f-info">
           <b>${esc(p.emoji ? p.emoji + ' ' : '')}${esc(p.nombre)}</b>
           <span class="precio">${final == null ? 'Sin precio' : pct ? `<span class="rebajado">${Datos.dinero(final)}</span><s>${Datos.dinero(p.precio)}</s>` : Datos.dinero(final)}</span>
-          <span class="f-chips">${esc(p.marca || '')}${pct ? ` <span class="etq oferta">-${pct}%</span>` : ''}${p.visible === false ? ' <span class="etq oculta">Oculto</span>' : ''}</span>
+          <span class="f-chips">${esc([p.marca, Datos.nombreCategoria(p.categoria || 'casuales')].filter(Boolean).join(' · '))}${pct ? ` <span class="etq oferta">-${pct}%</span>` : ''}${p.visible === false ? ' <span class="etq oculta">Oculto</span>' : ''}</span>
         </div>
         <div class="f-acc">
           <select class="f-estado ${esc(p.estado)}" data-estado aria-label="Estado de ${esc(p.nombre)}">
@@ -148,6 +159,7 @@
     if (m) mover(p, +m.dataset.mover);
   });
   $('#buscar').addEventListener('input', e => { texto = e.target.value.trim(); pintar(); });
+  $('#verCategoria').addEventListener('change', e => { verCat = e.target.value; pintar(); });
   $('#verEstado').addEventListener('click', e => {
     const b = e.target.closest('[data-v]');
     if (!b) return;
@@ -167,6 +179,7 @@
     $('#edBorrar').hidden = !p;
     form.nombre.value = p?.nombre || '';
     form.marca.value = p?.marca || '';
+    form.categoria.value = p?.categoria || (verCat || 'casuales');
     form.emoji.value = p?.emoji || '';
     form.descripcion.value = p?.descripcion || '';
     form.precio.value = p?.precio ?? '';
@@ -264,6 +277,7 @@
     const datos = {
       nombre: form.nombre.value.trim(),
       marca: form.marca.value.trim() || 'Otros',
+      categoria: form.categoria.value,
       emoji: form.emoji.value.trim(),
       descripcion: form.descripcion.value.trim(),
       precio, precio_oferta: oferta,

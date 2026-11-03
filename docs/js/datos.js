@@ -10,8 +10,22 @@ const Datos = (function () {
   'use strict';
 
   const C = window.CP_CONFIG;
-  const conSupabase = !!(C.SUPABASE_URL && C.SUPABASE_ANON_KEY && window.supabase);
+  const enPrueba = !!C.LOCAL_EN_PRUEBA && /^(localhost|127.0.0.1)$/.test(location.hostname);
+  const conSupabase = !enPrueba && !!(C.SUPABASE_URL && C.SUPABASE_ANON_KEY && window.supabase);
   const sb = conSupabase ? window.supabase.createClient(C.SUPABASE_URL, C.SUPABASE_ANON_KEY) : null;
+
+  /* Menú de categorías: cada producto guarda la categoría final (la "hoja") */
+  const CATEGORIAS = [
+    { id: 'deportivos', nombre: 'Deportivos' },
+    { id: 'casuales', nombre: 'Casuales' },
+    { id: 'tacones', nombre: 'Tacones' },
+    { id: 'ropa', nombre: 'Ropa', subs: [{ id: 'ropa-ninos', nombre: 'Niños' }, { id: 'ropa-ninas', nombre: 'Niñas' }] },
+    { id: 'accesorios', nombre: 'Accesorios', subs: [{ id: 'charms', nombre: 'Charms' }, { id: 'carteras', nombre: 'Carteras' }] },
+    { id: 'salud', nombre: 'Salud', subs: [{ id: 'salud', nombre: 'Vitaminas' }] }
+  ];
+  const HOJAS = CATEGORIAS.flatMap(c => (c.subs ? c.subs.map(s => ({ ...s, padre: c.id, nombreLargo: c.nombre + ' · ' + s.nombre })) : [{ ...c, padre: c.id, nombreLargo: c.nombre }]));
+  const padreDe = id => (HOJAS.find(h => h.id === id) || {}).padre || id;
+  const nombreCategoria = id => (HOJAS.find(h => h.id === id) || {}).nombreLargo || '';
 
   const ordenar = lista => lista.slice().sort((a, b) => (a.orden ?? 999) - (b.orden ?? 999));
 
@@ -108,7 +122,7 @@ const Datos = (function () {
   }
 
   return {
-    conSupabase, listar, miniatura, precioFinal, descuento, dinero,
+    conSupabase, enPrueba, CATEGORIAS, HOJAS, padreDe, nombreCategoria, listar, miniatura, precioFinal, descuento, dinero,
     sesion, entrar, salir, guardar, actualizar, borrar, subirFoto
   };
 })();

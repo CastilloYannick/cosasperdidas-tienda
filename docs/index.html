@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Cosas Perdidas · Tienda</title>
-  <meta name="description" content="Tenis y zapatos con historia, elegidos con amor. Mira las fotos, arma tu carrito y pídelo por Instagram.">
+  <meta name="description" content="Found by me, waiting for you. Tenis, tacones, ropa, accesorios y más, elegidos uno por uno. Arma tu carrito y envíame tu pedido por Instagram.">
   <meta name="theme-color" content="#7d80da">
   <meta property="og:title" content="Cosas Perdidas">
-  <meta property="og:description" content="Tenis y zapatos elegidos con amor. Pide por Instagram @cosass.perdidas">
+  <meta property="og:description" content="Found by me, waiting for you. Pídelo por Instagram @cosass.perdidas">
   <meta property="og:image" content="https://cosasperdidas.shop/img/p/adidas-gazelle-verde-petroleo-1.webp">
   <link rel="icon" href="img/flor.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,12 +46,12 @@
     <!-- ===== Portada ===== -->
     <section class="portada">
       <div class="portada-txt">
-        <p class="sello">hecho con amor · Guatemala</p>
-        <h1>Tenis con historia, listos para tu <em>próxima</em> aventura.</h1>
-        <p class="portada-sub">Pares elegidos uno por uno, fotografiados con cariño. Arma tu carrito y nos escribes por Instagram para apartarlo.</p>
+        <p class="sello">found by me · waiting for you</p>
+        <h1>Lo encontré yo, y ahora te <em>espera</em> a ti.</h1>
+        <p class="portada-sub">Cada pieza la elijo una por una, la fotografío con cariño y la guardo aquí hasta que llegue su persona. Arma tu carrito y envíame tu pedido por Instagram.</p>
         <div class="portada-cta">
           <a class="btn btn-prim" href="#catalogo">Ver catálogo</a>
-          <span class="contador"><b id="cuentaDisp" data-sufijo="">0</b> pares disponibles</span>
+          <span class="contador"><b id="cuentaDisp" data-sufijo="">0</b> piezas esperándote</span>
         </div>
       </div>
       <div class="collage" aria-hidden="true">
@@ -64,23 +64,37 @@
 
     <div class="cinta" aria-hidden="true">
       <div class="cinta-pista">
-        <span>Nike</span><i></i><span>Puma</span><i></i><span>Adidas</span><i></i><span>Reebok</span><i></i><span>New Balance</span><i></i><span>pide por Instagram</span><i></i>
-        <span>Nike</span><i></i><span>Puma</span><i></i><span>Adidas</span><i></i><span>Reebok</span><i></i><span>New Balance</span><i></i><span>pide por Instagram</span><i></i>
+        <span>found by me</span><i></i><span>waiting for you</span><i></i><span>Deportivos</span><i></i><span>Casuales</span><i></i><span>Tacones</span><i></i><span>Ropa</span><i></i><span>Accesorios</span><i></i><span>Salud</span><i></i>
+        <span>found by me</span><i></i><span>waiting for you</span><i></i><span>Deportivos</span><i></i><span>Casuales</span><i></i><span>Tacones</span><i></i><span>Ropa</span><i></i><span>Accesorios</span><i></i><span>Salud</span><i></i>
       </div>
     </div>
 
     <!-- ===== Catálogo ===== -->
     <section class="catalogo" id="catalogo">
       <div class="cat-cabeza">
-        <h2>El catálogo</h2>
-        <div class="filtros" role="toolbar" aria-label="Filtrar por marca" id="filtros"></div>
+        <h2>Lo que encontré para ti</h2>
+        <nav class="menu-cat" aria-label="Categorías">
+          <div class="filtros" id="categorias"></div>
+          <div class="filtros sub" id="subcategorias" hidden></div>
+        </nav>
         <div class="cat-ajustes">
           <label class="interruptor"><input type="checkbox" id="soloDisp"><span></span>Solo disponibles</label>
+          <div class="ajustes-der">
+          <select id="marca" aria-label="Marca"><option value="">Todas las marcas</option></select>
           <select id="orden" aria-label="Ordenar">
             <option value="destacados">Destacados</option>
             <option value="menor">Precio: menor a mayor</option>
             <option value="mayor">Precio: mayor a menor</option>
           </select>
+          <div class="vista" role="group" aria-label="Ver como">
+            <button type="button" data-vista="cuadricula" aria-pressed="true" aria-label="Ver en cuadrícula" title="Cuadrícula">
+              <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg>
+            </button>
+            <button type="button" data-vista="lista" aria-pressed="false" aria-label="Ver en lista" title="Lista">
+              <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><rect x="4" y="4.5" width="5" height="5" rx="1.5"/><rect x="4" y="14.5" width="5" height="5" rx="1.5"/><path d="M12 6h8M12 9h5M12 16h8M12 19h5"/></svg>
+            </button>
+          </div>
+          </div>
         </div>
       </div>
       <div class="rejilla" id="rejilla" aria-live="polite"></div>
@@ -90,16 +104,16 @@
     <section class="pasos" data-revela>
       <h2>¿Cómo comprar?</h2>
       <ol>
-        <li><span>1</span><b>Elige tus favoritos</b>Agrégalos al carrito con un toque.</li>
-        <li><span>2</span><b>Pide por Instagram</b>Te copiamos el mensaje con tu pedido, solo lo pegas.</li>
-        <li><span>3</span><b>Coordinamos la entrega</b>Confirmamos talla, pago y envío por mensaje.</li>
+        <li><span>1</span><b>Elige lo que te enamore</b>Agrégalo a tu carrito con un toque.</li>
+        <li><span>2</span><b>Envíame tu pedido</b>Copio tu pedido y abro mi chat de Instagram. Solo lo pegas y me lo envías.</li>
+        <li><span>3</span><b>Coordino tu envío</b>Te confirmo talla, pago y envío a toda Guatemala por mensaje.</li>
       </ol>
     </section>
   </main>
 
   <footer class="pie">
     <span class="flor-pie" id="florSecreta" aria-hidden="true"></span>
-    <p>cosas perdidas · encontradas con amor</p>
+    <p>found by me · waiting for you</p>
     <a href="https://www.instagram.com/cosass.perdidas/" target="_blank" rel="noopener">@cosass.perdidas</a>
   </footer>
 
@@ -122,6 +136,7 @@
         <button class="btn btn-prim" id="fichaAgregar" type="button">Agregar al carrito</button>
         <button class="btn btn-sec" id="fichaIg" type="button">Lo quiero · Instagram</button>
       </div>
+      <p class="ficha-envio">🚚 Envío a toda Guatemala. El costo depende de tu ubicación.</p>
     </div>
   </dialog>
 
@@ -152,9 +167,26 @@
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
         Pedir por Instagram
       </button>
-      <p class="car-nota">Copiamos tu pedido y abrimos el chat de @cosass.perdidas. Solo pega el mensaje y envíalo.</p>
+      <p class="car-nota">Copio tu pedido y abro mi chat de Instagram @cosass.perdidas.</p>
     </div>
   </aside>
+
+  <!-- ===== Pedido por Instagram ===== -->
+  <dialog class="pedido" id="pedido" aria-labelledby="pedidoTitulo">
+    <button class="cerrar" type="button" data-cerrar aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <span class="flor pedido-flor" aria-hidden="true"></span>
+    <h3 id="pedidoTitulo">Tu pedido ya está copiado 💌</h3>
+    <pre class="pedido-txt" id="pedidoTxt"></pre>
+    <ol class="pedido-pasos">
+      <li>Toca <b>Abrir mi Instagram</b>.</li>
+      <li>En mi chat, mantén presionado donde se escribe y toca <b>Pegar</b>.</li>
+      <li>Envíamelo y te respondo para apartarlo.</li>
+    </ol>
+    <a class="btn btn-ig" id="pedidoAbrir" href="#" target="_blank" rel="noopener">Abrir mi Instagram</a>
+    <button class="btn-texto" id="pedidoCopiar" type="button">Copiar otra vez</button>
+  </dialog>
 
   <div class="toasts" id="toasts" aria-live="polite"></div>
 

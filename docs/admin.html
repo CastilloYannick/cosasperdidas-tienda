@@ -44,6 +44,7 @@
 
   <!-- ===== Panel ===== -->
   <main class="tablero" id="vistaPanel" hidden>
+    <p class="aviso-prueba" id="avisoPrueba" hidden>Modo prueba en tu compu: ves el catálogo local y los cambios no se guardan.</p>
     <div class="tab-cabeza">
       <div>
         <h1>Tus productos</h1>
@@ -56,6 +57,7 @@
     </div>
     <div class="tab-filtros">
       <input type="search" id="buscar" placeholder="Buscar por nombre o marca" aria-label="Buscar">
+      <select class="f-estado" id="verCategoria" aria-label="Categoría"><option value="">Todas las categorías</option></select>
       <div class="segmento" id="verEstado" role="group" aria-label="Mostrar">
         <button type="button" data-v="todos" aria-pressed="true">Todos</button>
         <button type="button" data-v="disponible" aria-pressed="false">Disponibles</button>
@@ -88,10 +90,11 @@
         <div class="campos">
           <label class="ancho">Nombre<input name="nombre" required maxlength="80" placeholder="Ej. Nike Air Force blancos"></label>
           <label>Marca<input name="marca" list="marcas" maxlength="40" placeholder="Nike"></label>
+          <label>Categoría<select name="categoria" id="edCategoria" required></select></label>
           <label><span>Emoji <small>opcional</small></span><input name="emoji" maxlength="4" placeholder="💚"></label>
           <label class="ancho">Descripción<textarea name="descripcion" rows="3" maxlength="500" placeholder="Color, estado, cómo se ven puestos…"></textarea></label>
           <label>Precio (Q)<input name="precio" type="number" min="0" step="1" inputmode="numeric" placeholder="500"></label>
-          <label>Talla<input name="talla" maxlength="30" placeholder="Ej. 7 US / 38"></label>
+          <label>Talla<input name="talla" maxlength="60" placeholder="Ej. US 7 · EU 38 · 24 cm"></label>
           <div class="ancho grupo-desc">
             <span class="etq-campo">Descuento</span>
             <div class="desc-fila">
