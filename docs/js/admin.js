@@ -63,6 +63,7 @@
     $('#vistaEntrada').hidden = true;
     $('#vistaPanel').hidden = false;
     $('#btnSalir').hidden = false;
+    document.dispatchEvent(new CustomEvent('cp:panel'));
     await recargar();
   }
 

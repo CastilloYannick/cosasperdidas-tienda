@@ -496,6 +496,7 @@
       $('#rejilla').innerHTML = '<p class="vacio"><b>No pudimos cargar el catálogo</b>Revisa tu conexión y recarga la página.</p>';
       return;
     }
+    document.dispatchEvent(new CustomEvent('cp:productos', { detail: productos }));
     pintarMenu();
     pintarMosaico();
     pintarMarcas();

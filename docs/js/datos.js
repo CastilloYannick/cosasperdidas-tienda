@@ -12,7 +12,10 @@ const Datos = (function () {
   const C = window.CP_CONFIG;
   const enPrueba = !!C.LOCAL_EN_PRUEBA && /^(localhost|127.0.0.1)$/.test(location.hostname);
   const conSupabase = !enPrueba && !!(C.SUPABASE_URL && C.SUPABASE_ANON_KEY && window.supabase);
-  const sb = conSupabase ? window.supabase.createClient(C.SUPABASE_URL, C.SUPABASE_ANON_KEY) : null;
+  const configurado = !!(C.SUPABASE_URL && C.SUPABASE_ANON_KEY && window.supabase);
+  // Reseñas y envíos siempre usan la base real (también al probar en local)
+  const cliente = configurado ? window.supabase.createClient(C.SUPABASE_URL, C.SUPABASE_ANON_KEY) : null;
+  const sb = conSupabase ? cliente : null;
 
   /* Menú de categorías: cada producto guarda la categoría final (la "hoja") */
   const CATEGORIAS = [
@@ -121,7 +124,83 @@ const Datos = (function () {
     return cli.storage.from(C.BUCKET).getPublicUrl(base + '.webp').data.publicUrl;
   }
 
+  /* ---------- Reseñas (públicas solo las aprobadas) ---------- */
+  async function resenasAprobadas() {
+    if (!cliente) return [];
+    const { data, error } = await cliente.from('resenas').select('id,nombre,producto_id,estrellas,texto,creada')
+      .eq('aprobada', true).order('creada', { ascending: false }).limit(40);
+    if (error) { console.warn(error); return []; }
+    return data;
+  }
+  async function enviarResena(r) {
+    if (!cliente) throw new Error('Sin conexión');
+    const { error } = await cliente.from('resenas').insert({ ...r, aprobada: false });
+    if (error) throw error;
+  }
+
+  /* ---------- Envíos ---------- */
+  const ESTADOS_ENVIO = [
+    { id: 'confirmado', nombre: 'Pedido confirmado' },
+    { id: 'empacado', nombre: 'Empacado con amor' },
+    { id: 'enviado', nombre: 'Entregado a la paquetería' },
+    { id: 'en_camino', nombre: 'En camino' },
+    { id: 'entregado', nombre: 'Entregado' }
+  ];
+  const COURIERS = [
+    { nombre: 'Guatex', url: 'https://guatex.com/' },
+    { nombre: 'Forza Delivery', url: 'https://www.forzadelivery.com/' },
+    { nombre: 'Cargo Expreso', url: 'https://www.cargoexpreso.com/' },
+    { nombre: 'Correos de Guatemala', url: '' },
+    { nombre: 'Entrega personal', url: '' }
+  ];
+  async function verEnvio(codigo) {
+    if (!cliente) throw new Error('Sin conexión');
+    const { data, error } = await cliente.rpc('ver_envio', { p_codigo: codigo });
+    if (error) throw error;
+    return data && data[0];
+  }
+
+  /* ---------- Solo para el panel: reseñas y envíos ---------- */
+  function exigirCliente() {
+    if (!cliente) throw new Error('Falta configurar Supabase en js/config.js');
+    return cliente;
+  }
+  async function todasResenas() {
+    const { data, error } = await exigirCliente().from('resenas').select('*').order('creada', { ascending: false }).limit(300);
+    if (error) throw error;
+    return data;
+  }
+  async function cambiarResena(id, cambios) {
+    const { error } = await exigirCliente().from('resenas').update(cambios).eq('id', id);
+    if (error) throw error;
+  }
+  async function borrarResena(id) {
+    const { error } = await exigirCliente().from('resenas').delete().eq('id', id);
+    if (error) throw error;
+  }
+  async function listarEnvios() {
+    const { data, error } = await exigirCliente().from('envios').select('*').order('creado', { ascending: false }).limit(300);
+    if (error) throw error;
+    return data;
+  }
+  async function guardarEnvio(e) {
+    const { data, error } = await exigirCliente().from('envios').upsert(e).select().single();
+    if (error) throw error;
+    return data;
+  }
+  async function borrarEnvio(codigo) {
+    const { error } = await exigirCliente().from('envios').delete().eq('codigo', codigo);
+    if (error) throw error;
+  }
+  function nuevoCodigo() {
+    const letras = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // sin 0/O ni 1/I para no confundirse
+    const n = crypto.getRandomValues(new Uint8Array(6));
+    return 'CP-' + [...n].map(x => letras[x % letras.length]).join('');
+  }
+
   return {
+    resenasAprobadas, enviarResena, ESTADOS_ENVIO, COURIERS, verEnvio,
+    todasResenas, cambiarResena, borrarResena, listarEnvios, guardarEnvio, borrarEnvio, nuevoCodigo,
     conSupabase, enPrueba, CATEGORIAS, HOJAS, padreDe, nombreCategoria, listar, miniatura, precioFinal, descuento, dinero,
     sesion, entrar, salir, guardar, actualizar, borrar, subirFoto
   };

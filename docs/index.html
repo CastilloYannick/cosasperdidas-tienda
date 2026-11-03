@@ -118,15 +118,31 @@
       <ol>
         <li><span>1</span><b>Elige lo que te enamore</b>Agrégalo a tu carrito con un toque.</li>
         <li><span>2</span><b>Envíame tu pedido</b>Copio tu pedido y abro mi chat de Instagram. Solo lo pegas y me lo envías.</li>
-        <li><span>3</span><b>Coordino tu envío</b>Te confirmo talla, pago y envío a toda Guatemala por mensaje.</li>
+        <li><span>3</span><b>Coordino tu envío</b>Te confirmo talla, pago y envío a toda Guatemala. Después sigues tu paquete <a href="#" data-seguir>aquí mismo</a>.</li>
       </ol>
+    </section>
+
+    <!-- ===== Reseñas ===== -->
+    <section class="resenas" id="resenas" data-revela aria-labelledby="resTitulo">
+      <div class="res-cabeza">
+        <div>
+          <h2 id="resTitulo">Lo que dicen de sus cosas perdidas</h2>
+          <p class="res-resumen" id="resumenResenas"></p>
+        </div>
+        <button class="btn btn-sec" id="btnResena" type="button">Dejar mi reseña</button>
+      </div>
+      <div class="res-lista" id="listaResenas"></div>
     </section>
   </main>
 
   <footer class="pie">
     <span class="flor-pie" id="florSecreta" aria-hidden="true"></span>
     <p>found by me · waiting for you</p>
-    <a href="https://www.instagram.com/cosass.perdidas/" target="_blank" rel="noopener">@cosass.perdidas</a>
+    <nav class="pie-enlaces">
+      <a href="#" data-seguir>Sigue tu pedido</a>
+      <a href="#resenas">Reseñas</a>
+      <a href="https://www.instagram.com/cosass.perdidas/" target="_blank" rel="noopener">@cosass.perdidas</a>
+    </nav>
   </footer>
 
   <!-- ===== Ficha de producto ===== -->
@@ -200,6 +216,39 @@
     <button class="btn-texto" id="pedidoCopiar" type="button">Copiar otra vez</button>
   </dialog>
 
+  <!-- ===== Dejar reseña ===== -->
+  <dialog class="pedido form-dlg" id="dlgResena" aria-labelledby="resFormTitulo">
+    <button class="cerrar" type="button" data-cerrar aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <form id="formResena" class="form-res">
+      <h3 id="resFormTitulo">Cuéntame qué te pareció</h3>
+      <p class="form-nota">La leo y la publico en cuanto la revise.</p>
+      <div class="elegir-estrellas" id="elegirEstrellas" role="radiogroup" aria-label="Calificación">
+        <button type="button" data-e="1" aria-label="1 estrella"></button><button type="button" data-e="2" aria-label="2 estrellas"></button><button type="button" data-e="3" aria-label="3 estrellas"></button><button type="button" data-e="4" aria-label="4 estrellas"></button><button type="button" data-e="5" aria-label="5 estrellas"></button>
+      </div>
+      <label>Tu nombre o @ de Instagram<input name="nombre" required minlength="2" maxlength="40" autocomplete="nickname"></label>
+      <label>¿Qué compraste?<select name="producto" id="resProducto"></select></label>
+      <label>Tu reseña<textarea name="texto" required minlength="5" maxlength="500" rows="4" placeholder="Cómo te quedaron, cómo llegó tu paquete…"></textarea><small class="contador-txt" id="resCuenta">0/500</small></label>
+      <label class="trampa" aria-hidden="true">Sitio web<input name="sitio" tabindex="-1" autocomplete="off"></label>
+      <button class="btn btn-prim" type="submit">Enviar reseña</button>
+    </form>
+  </dialog>
+
+  <!-- ===== Sigue tu pedido ===== -->
+  <dialog class="pedido form-dlg" id="dlgSeguir" aria-labelledby="seguirTitulo">
+    <button class="cerrar" type="button" data-cerrar aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <span class="flor pedido-flor" aria-hidden="true"></span>
+    <h3 id="seguirTitulo">Sigue tu pedido</h3>
+    <form id="formSeguir" class="form-seguir">
+      <input id="seguirCodigo" placeholder="CP-XXXXXX" aria-label="Código de tu pedido" autocapitalize="characters" autocomplete="off" spellcheck="false" maxlength="12">
+      <button class="btn btn-prim" type="submit">Buscar</button>
+    </form>
+    <div id="seguirResultado" aria-live="polite"></div>
+  </dialog>
+
   <div class="toasts" id="toasts" aria-live="polite"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.58.0/dist/umd/supabase.min.js"></script>
@@ -207,5 +256,6 @@
   <script src="js/efectos.js"></script>
   <script src="js/datos.js"></script>
   <script src="js/tienda.js"></script>
+  <script src="js/extras.js"></script>
 </body>
 </html>

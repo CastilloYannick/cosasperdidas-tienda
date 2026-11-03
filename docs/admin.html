@@ -45,6 +45,12 @@
   <!-- ===== Panel ===== -->
   <main class="tablero" id="vistaPanel" hidden>
     <p class="aviso-prueba" id="avisoPrueba" hidden>Modo prueba en tu compu: ves el catálogo local y los cambios no se guardan.</p>
+    <nav class="pestanas" id="pestanas" role="tablist" aria-label="Secciones del panel">
+      <button type="button" role="tab" data-pestana="productos" aria-selected="true">Productos</button>
+      <button type="button" role="tab" data-pestana="envios" aria-selected="false">Envíos</button>
+      <button type="button" role="tab" data-pestana="resenas" aria-selected="false">Reseñas <span class="insignia" id="nPendientes" hidden>0</span></button>
+    </nav>
+    <section id="secProductos" data-seccion="productos">
     <div class="tab-cabeza">
       <div>
         <h1>Tus productos</h1>
@@ -66,7 +72,65 @@
       </div>
     </div>
     <ul class="lista" id="lista"></ul>
+    </section>
+
+    <!-- Envíos -->
+    <section id="secEnvios" data-seccion="envios" hidden>
+      <div class="tab-cabeza">
+        <div>
+          <h1>Envíos</h1>
+          <p class="resumen">Anota el número de guía y mándale al cliente su enlace para seguir su paquete.</p>
+        </div>
+        <button class="btn btn-prim" id="btnNuevoEnvio" type="button">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          Nuevo envío
+        </button>
+      </div>
+      <ul class="lista" id="listaEnvios"></ul>
+    </section>
+
+    <!-- Reseñas -->
+    <section id="secResenas" data-seccion="resenas" hidden>
+      <div class="tab-cabeza">
+        <div>
+          <h1>Reseñas</h1>
+          <p class="resumen">Nada se publica hasta que tú lo apruebes.</p>
+        </div>
+      </div>
+      <ul class="lista" id="listaResenas"></ul>
+    </section>
   </main>
+
+  <!-- ===== Editor de envío ===== -->
+  <dialog class="editor" id="dlgEnvio" aria-labelledby="envTitulo">
+    <form id="formEnvio">
+      <div class="ed-cabeza">
+        <h2 id="envTitulo">Nuevo envío</h2>
+        <button class="cerrar" type="button" data-cerrar aria-label="Cerrar">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="ed-cuerpo">
+        <p class="env-codigo">Código: <b id="envCodigo">CP-······</b></p>
+        <div class="campos">
+          <label>Cliente <small>solo lo ves tú</small><input name="cliente" maxlength="60" placeholder="@usuario de Instagram"></label>
+          <label>Paquetería<select name="courier" id="envCourier"></select></label>
+          <label class="ancho">Qué lleva<input name="productos" maxlength="160" placeholder="Ej. Puma rosados + charm de corazón"></label>
+          <label>Número de guía<input name="guia" maxlength="60" placeholder="Lo pones cuando lo tengas"></label>
+          <label>Página de rastreo <small>se llena sola</small><input name="courier_url" type="url" maxlength="200" placeholder="https://"></label>
+          <div class="ancho">
+            <span class="etq-campo">Estado</span>
+            <div class="segmento" id="envEstado" role="radiogroup" aria-label="Estado del envío"></div>
+          </div>
+          <label class="ancho">Notas <small>solo para ti</small><textarea name="notas" rows="2" maxlength="300"></textarea></label>
+        </div>
+      </div>
+      <div class="ed-pie">
+        <button class="btn btn-borrar" type="button" id="envBorrar">Eliminar</button>
+        <button class="btn btn-prim" type="submit" id="envGuardar">Guardar</button>
+      </div>
+    </form>
+  </dialog>
 
   <!-- ===== Editor ===== -->
   <dialog class="editor" id="editor" aria-labelledby="edTitulo">
@@ -133,5 +197,6 @@
   <script src="js/efectos.js"></script>
   <script src="js/datos.js"></script>
   <script src="js/admin.js"></script>
+  <script src="js/admin-extras.js"></script>
 </body>
 </html>
