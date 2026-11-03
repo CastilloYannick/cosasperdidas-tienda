@@ -528,3 +528,8 @@ html, body { overflow-x: clip; }
 @media (hover: hover) and (pointer: fine) { .btn-borde:hover { background: color-mix(in srgb, var(--prim) 10%, transparent); } }
 .portada-cta .contador { flex-basis: 100%; }
 @media (max-width: 380px) { .portada-cta .btn { padding: 0 16px; font-size: 15px; } }
+
+.seg-prep { margin: 0; padding: 12px 14px; border-radius: 14px; background: color-mix(in srgb, var(--rosa) 35%, var(--surface)); font-size: 14.5px; }
+/* Botón Rastrear relleno de color */
+.btn-borde { background: var(--acento); color: var(--acento-ink); box-shadow: none; }
+@media (hover: hover) and (pointer: fine) { .btn-borde:hover { background: color-mix(in srgb, var(--acento) 82%, var(--prim)); } }

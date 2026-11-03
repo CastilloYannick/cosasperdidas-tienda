@@ -139,13 +139,6 @@ const Datos = (function () {
   }
 
   /* ---------- Envíos ---------- */
-  const ESTADOS_ENVIO = [
-    { id: 'confirmado', nombre: 'Pedido confirmado' },
-    { id: 'empacado', nombre: 'Empacado con amor' },
-    { id: 'enviado', nombre: 'Entregado a la paquetería' },
-    { id: 'en_camino', nombre: 'En camino' },
-    { id: 'entregado', nombre: 'Entregado' }
-  ];
   const COURIERS = [
     { nombre: 'Guatex', url: 'https://guatex.com/' },
     { nombre: 'Forza Delivery', url: 'https://rastreo.forzadelivery.com/' },
@@ -199,7 +192,7 @@ const Datos = (function () {
   }
 
   return {
-    resenasAprobadas, enviarResena, ESTADOS_ENVIO, COURIERS, verEnvio,
+    resenasAprobadas, enviarResena, COURIERS, verEnvio,
     todasResenas, cambiarResena, borrarResena, listarEnvios, guardarEnvio, borrarEnvio, nuevoCodigo,
     conSupabase, enPrueba, CATEGORIAS, HOJAS, padreDe, nombreCategoria, listar, miniatura, precioFinal, descuento, dinero,
     sesion, entrar, salir, guardar, actualizar, borrar, subirFoto

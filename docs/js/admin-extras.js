@@ -35,7 +35,8 @@
   }
 
   /* ---------- Envíos ---------- */
-  const nombreEstado = id => (Datos.ESTADOS_ENVIO.find(s => s.id === id) || {}).nombre || id;
+  // El estado se deduce solo: sin número de guía = preparando; con guía = ya va con la paquetería
+  const conGuia = e => !!(e.guia || '').trim();
 
   function mensajeCliente(e) {
     return `¡Hola! 💌 Tu pedido de cosas perdidas ya tiene seguimiento.\nSíguelo aquí: ${SITIO}#pedido/${e.codigo}` +
@@ -55,9 +56,7 @@
         <span class="f-chips">${e.guia ? `${esc(e.courier || 'Guía')} · ${esc(e.guia)}` : '<span class="etq oculta">Falta número de guía</span>'}</span>
       </div>
       <div class="f-acc">
-        <select class="f-estado" data-estado-envio aria-label="Estado de ${esc(e.codigo)}">
-          ${Datos.ESTADOS_ENVIO.map(s => `<option value="${s.id}"${s.id === e.estado ? ' selected' : ''}>${s.nombre}</option>`).join('')}
-        </select>
+        <span class="etq ${conGuia(e) ? 'apartado' : ''}">${conGuia(e) ? 'Con ' + esc(e.courier || 'la paquetería') : 'Preparando'}</span>
         <button class="btn-icono suave" type="button" data-copiar aria-label="Copiar mensaje para el cliente" title="Copiar mensaje">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
         </button>
@@ -68,31 +67,11 @@
     </li>`).join('');
   }
 
-  async function cambiarEstadoEnvio(e, estado) {
-    const antes = { estado: e.estado, fechas: e.fechas };
-    const fechas = { ...(e.fechas || {}) };
-    if (!fechas[estado]) fechas[estado] = new Date().toISOString();
-    Object.assign(e, { estado, fechas });
-    pintarEnvios();
-    try {
-      await Datos.guardarEnvio({ codigo: e.codigo, estado, fechas });
-      Efectos.toast(`${e.codigo}: ${nombreEstado(estado).toLowerCase()}`, { accion: { texto: 'Copiar mensaje', fn: () => copiarMensaje(e) } });
-    } catch (err) {
-      Object.assign(e, antes); pintarEnvios();
-      Efectos.toast('No se pudo guardar. Revisa tu conexión.', { error: true });
-    }
-  }
-
   async function copiarMensaje(e) {
     const ok = await copiar(mensajeCliente(e));
     Efectos.toast(ok ? 'Mensaje copiado. Pégalo en el chat de Instagram del cliente 💌' : 'No pude copiarlo', { error: !ok });
   }
 
-  $('#listaEnvios').addEventListener('change', ev => {
-    const s = ev.target.closest('[data-estado-envio]');
-    if (!s) return;
-    cambiarEstadoEnvio(envios.find(x => x.codigo === s.closest('.fila').dataset.codigo), s.value);
-  });
   $('#listaEnvios').addEventListener('click', ev => {
     const fila = ev.target.closest('.fila');
     if (!fila) return;
@@ -105,14 +84,6 @@
   const fE = $('#formEnvio'), dE = $('#dlgEnvio');
   $('#envCourier').innerHTML = Datos.COURIERS.map(c => `<option value="${esc(c.nombre)}">${esc(c.nombre)}</option>`).join('') +
     `<option value="${OTRA}">Otra…</option>`;
-  const CORTO = { confirmado: 'Confirmado', empacado: 'Empacado', enviado: 'Paquetería', en_camino: 'En camino', entregado: 'Entregado' };
-  $('#envEstado').innerHTML = Datos.ESTADOS_ENVIO.map(s => `<button type="button" data-e="${s.id}">${CORTO[s.id]}</button>`).join('');
-
-  function ponerEstadoEnvio(e) {
-    fE.dataset.estado = e;
-    document.querySelectorAll('#envEstado button').forEach(b => b.setAttribute('aria-checked', String(b.dataset.e === e)));
-  }
-  $('#envEstado').addEventListener('click', ev => { const b = ev.target.closest('[data-e]'); if (b) ponerEstadoEnvio(b.dataset.e); });
 
   fE.courier.addEventListener('change', () => {
     if (fE.courier.value === OTRA) {
@@ -143,7 +114,6 @@
     fE.guia.value = e?.guia || '';
     fE.courier_url.value = e ? (e.courier_url || '') : Datos.COURIERS[0].url;
     fE.notas.value = e?.notas || '';
-    ponerEstadoEnvio(e?.estado || 'confirmado');
     dE.showModal();
   }
   $('#btnNuevoEnvio').addEventListener('click', () => abrirEnvio(null));
@@ -152,17 +122,18 @@
 
   fE.addEventListener('submit', async ev => {
     ev.preventDefault();
-    const estado = fE.dataset.estado || 'confirmado';
+    const guia = fE.guia.value.trim();
+    const estado = guia ? 'enviado' : 'confirmado';
     const fechas = { ...(editando?.fechas || {}) };
     if (!fechas.confirmado) fechas.confirmado = new Date().toISOString();
-    if (!fechas[estado]) fechas[estado] = new Date().toISOString();
+    if (guia && !fechas.enviado) fechas.enviado = new Date().toISOString();
     const datos = {
       codigo: fE.dataset.codigo,
       cliente: fE.cliente.value.trim(),
       productos: fE.productos.value.trim(),
       courier: fE.courier.value === OTRA ? '' : fE.courier.value,
       courier_url: fE.courier_url.value.trim(),
-      guia: fE.guia.value.trim(),
+      guia,
       estado, fechas,
       notas: fE.notas.value.trim()
     };

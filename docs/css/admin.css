@@ -149,3 +149,6 @@
 .campos { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 .campos > * { min-width: 0; }
 @media (max-width: 640px) { .campos { grid-template-columns: minmax(0, 1fr); } }
+
+.env-ayuda { margin: 0; padding: 12px 14px; border-radius: 14px; background: var(--surface-2); color: var(--muted); font-size: 14px; }
+.fila-envio .f-acc .etq { white-space: nowrap; }

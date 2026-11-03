@@ -124,12 +124,19 @@
       res.innerHTML = `<p class="seg-aviso">No encuentro el pedido <b>${esc(codigo)}</b>. Revisa que el código esté bien escrito o escríbeme por Instagram.</p>`;
       return;
     }
-    const idx = Datos.ESTADOS_ENVIO.findIndex(s => s.id === e.estado);
     const fechas = e.fechas || {};
+    const despachado = !!e.guia;
+    const pasos = [
+      { nombre: 'Pedido confirmado', fecha: fechas.confirmado },
+      { nombre: e.courier ? `Ya va con ${e.courier}` : 'Entregado a la paquetería', fecha: fechas.enviado },
+      { nombre: 'En camino a ti', fecha: null }
+    ];
+    const idx = despachado ? 2 : 0;
     res.innerHTML = `<div class="seg-cabeza"><span>Pedido</span><b>${esc(e.codigo)}</b></div>
       ${e.productos ? `<p class="seg-prod">${esc(e.productos)}</p>` : ''}
-      <ol class="linea">${Datos.ESTADOS_ENVIO.map((s, i) => `<li class="${i < idx ? 'hecho' : i === idx ? 'actual' : ''}" style="--i:${i}">
-        <span class="punto"></span><b>${s.nombre}</b>${fechas[s.id] ? `<small>${fecha(fechas[s.id])}</small>` : ''}</li>`).join('')}</ol>
+      ${despachado ? '' : '<p class="seg-prep">Estoy preparando tu pedido con mucho cariño. En cuanto lo entregue a la paquetería, aquí aparece tu número de guía 💌</p>'}
+      <ol class="linea">${pasos.map((s, i) => `<li class="${i < idx ? 'hecho' : i === idx ? 'actual' : ''}" style="--i:${i}">
+        <span class="punto"></span><b>${esc(s.nombre)}</b>${s.fecha && i <= idx ? `<small>${fecha(s.fecha)}</small>` : ''}</li>`).join('')}</ol>
       ${e.guia ? `<div class="seg-guia">
         <div><span>Número de guía${e.courier ? ' · ' + esc(e.courier) : ''}</span><b id="numGuia">${esc(e.guia)}</b></div>
         <button class="btn-texto" type="button" id="copiarGuia">Copiar</button>

@@ -116,12 +116,9 @@
           <label>Cliente <small>solo lo ves tú</small><input name="cliente" maxlength="60" placeholder="@usuario de Instagram"></label>
           <label>Paquetería<select name="courier" id="envCourier"></select></label>
           <label class="ancho">Qué lleva<input name="productos" maxlength="160" placeholder="Ej. Puma rosados + charm de corazón"></label>
-          <label>Número de guía<input name="guia" maxlength="60" placeholder="Lo pones cuando lo tengas"></label>
+          <label>Número de guía <small>agrégalo cuando despaches</small><input name="guia" maxlength="60" placeholder="Ej. 1234567890"></label>
           <label>Página de rastreo <small>se llena sola</small><input name="courier_url" type="url" maxlength="200" placeholder="https://"></label>
-          <div class="ancho">
-            <span class="etq-campo">Estado</span>
-            <div class="segmento" id="envEstado" role="radiogroup" aria-label="Estado del envío"></div>
-          </div>
+          <p class="ancho env-ayuda">Sin número de guía el cliente ve "Preparando tu pedido". En cuanto lo agregas, ve que ya va con la paquetería y le aparece el botón para rastrearlo.</p>
           <label class="ancho">Notas <small>solo para ti</small><textarea name="notas" rows="2" maxlength="300"></textarea></label>
         </div>
       </div>
