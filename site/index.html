@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Cosas Perdidas · Tienda</title>
+  <meta name="description" content="Tenis y zapatos con historia, elegidos con amor. Mira las fotos, arma tu carrito y pídelo por Instagram.">
+  <meta name="theme-color" content="#7d80da">
+  <meta property="og:title" content="Cosas Perdidas">
+  <meta property="og:description" content="Tenis y zapatos elegidos con amor. Pide por Instagram @cosass.perdidas">
+  <meta property="og:image" content="https://cosasperdidas.shop/img/p/adidas-gazelle-verde-petroleo-1.webp">
+  <link rel="icon" href="img/flor.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,600..900,100,1&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tienda.css">
+  <script>
+    (function () { try { var t = localStorage.getItem('cp-tema'); if (t) document.documentElement.dataset.theme = t; } catch (e) {} })();
+  </script>
+</head>
+<body>
+  <a class="saltar" href="#catalogo">Ir al catálogo</a>
+
+  <!-- ===== Barra superior ===== -->
+  <header class="barra">
+    <a class="marca" href="#" aria-label="Cosas Perdidas, inicio">
+      <span class="marca-txt">cosas<span class="flor-mini" aria-hidden="true"></span>perdidas</span>
+    </a>
+    <nav class="barra-acc">
+      <a class="enlace-ig" href="https://www.instagram.com/cosass.perdidas/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+        <span>@cosass.perdidas</span>
+      </a>
+      <button class="btn-icono" id="btnTema" type="button" aria-label="Cambiar tema">
+        <svg class="i-sol" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i-luna" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/></svg>
+      </button>
+      <button class="btn-carrito" id="btnCarrito" type="button" aria-label="Abrir carrito">
+        <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1.2 11.1a2 2 0 0 1-2 1.9H8.2a2 2 0 0 1-2-1.9L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+        <span class="burbuja" id="cuentaCarrito" hidden>0</span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ===== Portada ===== -->
+    <section class="portada">
+      <div class="portada-txt">
+        <p class="sello">hecho con amor · Guatemala</p>
+        <h1>Tenis con historia, listos para tu <em>próxima</em> aventura.</h1>
+        <p class="portada-sub">Pares elegidos uno por uno, fotografiados con cariño. Arma tu carrito y nos escribes por Instagram para apartarlo.</p>
+        <div class="portada-cta">
+          <a class="btn btn-prim" href="#catalogo">Ver catálogo</a>
+          <span class="contador"><b id="cuentaDisp" data-sufijo="">0</b> pares disponibles</span>
+        </div>
+      </div>
+      <div class="collage" aria-hidden="true">
+        <img class="c1" src="img/p/puma-rosados-1-m.webp" alt="">
+        <img class="c2" src="img/p/adidas-gazelle-verde-petroleo-1-m.webp" alt="">
+        <img class="c3" src="img/p/reebok-classic-crema-rosado-1-m.webp" alt="">
+        <span class="flor f1"></span><span class="flor f2"></span><span class="flor f3"></span>
+      </div>
+    </section>
+
+    <div class="cinta" aria-hidden="true">
+      <div class="cinta-pista">
+        <span>Nike</span><i></i><span>Puma</span><i></i><span>Adidas</span><i></i><span>Reebok</span><i></i><span>New Balance</span><i></i><span>pide por Instagram</span><i></i>
+        <span>Nike</span><i></i><span>Puma</span><i></i><span>Adidas</span><i></i><span>Reebok</span><i></i><span>New Balance</span><i></i><span>pide por Instagram</span><i></i>
+      </div>
+    </div>
+
+    <!-- ===== Catálogo ===== -->
+    <section class="catalogo" id="catalogo">
+      <div class="cat-cabeza">
+        <h2>El catálogo</h2>
+        <div class="filtros" role="toolbar" aria-label="Filtrar por marca" id="filtros"></div>
+        <div class="cat-ajustes">
+          <label class="interruptor"><input type="checkbox" id="soloDisp"><span></span>Solo disponibles</label>
+          <select id="orden" aria-label="Ordenar">
+            <option value="destacados">Destacados</option>
+            <option value="menor">Precio: menor a mayor</option>
+            <option value="mayor">Precio: mayor a menor</option>
+          </select>
+        </div>
+      </div>
+      <div class="rejilla" id="rejilla" aria-live="polite"></div>
+    </section>
+
+    <!-- ===== Cómo comprar ===== -->
+    <section class="pasos" data-revela>
+      <h2>¿Cómo comprar?</h2>
+      <ol>
+        <li><span>1</span><b>Elige tus favoritos</b>Agrégalos al carrito con un toque.</li>
+        <li><span>2</span><b>Pide por Instagram</b>Te copiamos el mensaje con tu pedido, solo lo pegas.</li>
+        <li><span>3</span><b>Coordinamos la entrega</b>Confirmamos talla, pago y envío por mensaje.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <span class="flor-pie" id="florSecreta" aria-hidden="true"></span>
+    <p>cosas perdidas · encontradas con amor</p>
+    <a href="https://www.instagram.com/cosass.perdidas/" target="_blank" rel="noopener">@cosass.perdidas</a>
+  </footer>
+
+  <!-- ===== Ficha de producto ===== -->
+  <dialog class="ficha" id="ficha" aria-labelledby="fichaNombre">
+    <button class="cerrar" type="button" data-cerrar aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="ficha-galeria">
+      <button class="foto-grande" id="fotoGrande" type="button" aria-label="Ver foto en pantalla completa"><img alt=""></button>
+      <div class="miniaturas" id="miniaturas"></div>
+    </div>
+    <div class="ficha-info">
+      <p class="ficha-marca" id="fichaMarca"></p>
+      <h3 id="fichaNombre"></h3>
+      <p class="ficha-precio" id="fichaPrecio"></p>
+      <p class="ficha-desc" id="fichaDesc"></p>
+      <dl class="ficha-datos" id="fichaDatos"></dl>
+      <div class="ficha-acc">
+        <button class="btn btn-prim" id="fichaAgregar" type="button">Agregar al carrito</button>
+        <button class="btn btn-sec" id="fichaIg" type="button">Lo quiero · Instagram</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ===== Visor a pantalla completa ===== -->
+  <dialog class="visor" id="visor" aria-label="Fotos en grande">
+    <img id="visorImg" alt="">
+    <button class="visor-btn ant" type="button" data-paso="-1" aria-label="Foto anterior">‹</button>
+    <button class="visor-btn sig" type="button" data-paso="1" aria-label="Foto siguiente">›</button>
+    <button class="cerrar" type="button" data-cerrar aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <p class="visor-cuenta" id="visorCuenta"></p>
+  </dialog>
+
+  <!-- ===== Carrito ===== -->
+  <div class="velo" id="velo" hidden></div>
+  <aside class="carrito" id="carrito" aria-label="Carrito" aria-hidden="true">
+    <div class="car-cabeza">
+      <h2>Tu carrito</h2>
+      <button class="cerrar" type="button" id="cerrarCarrito" aria-label="Cerrar carrito">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <ul class="car-lista" id="carLista"></ul>
+    <div class="car-pie">
+      <p class="car-total"><span>Total</span><b id="carTotal">Q0</b></p>
+      <button class="btn btn-ig" id="btnPedir" type="button">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+        Pedir por Instagram
+      </button>
+      <p class="car-nota">Copiamos tu pedido y abrimos el chat de @cosass.perdidas. Solo pega el mensaje y envíalo.</p>
+    </div>
+  </aside>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.58.0/dist/umd/supabase.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/efectos.js"></script>
+  <script src="js/datos.js"></script>
+  <script src="js/tienda.js"></script>
+</body>
+</html>
