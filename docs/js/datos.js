@@ -10,6 +10,8 @@ const Datos = (function () {
   'use strict';
 
   const C = window.CP_CONFIG;
+  // Respaldo sin internet: los datos vienen de data/offline.js (window.CP_OFFLINE)
+  const OFF = window.CP_OFFLINE || null;
   const enPrueba = !!C.LOCAL_EN_PRUEBA && /^(localhost|127.0.0.1)$/.test(location.hostname);
   const conSupabase = !enPrueba && !!(C.SUPABASE_URL && C.SUPABASE_ANON_KEY && window.supabase);
   const configurado = !!(C.SUPABASE_URL && C.SUPABASE_ANON_KEY && window.supabase);
@@ -38,6 +40,7 @@ const Datos = (function () {
   }
 
   async function listar() {
+    if (OFF) return ordenar(OFF.productos || []);
     if (!sb) return local();
     const { data, error } = await sb.from('productos').select('*').order('orden', { ascending: true });
     if (error) {
@@ -126,6 +129,7 @@ const Datos = (function () {
 
   /* ---------- Ajustes: fotos de portada y políticas ---------- */
   async function ajustes() {
+    if (OFF) return OFF.ajustes || {};
     let base = {};
     try { base = await (await fetch('data/ajustes.json', { cache: 'no-cache' })).json(); } catch (e) {}
     if (!sb) return base;
@@ -141,6 +145,7 @@ const Datos = (function () {
 
   /* ---------- Reseñas (públicas solo las aprobadas) ---------- */
   async function resenasAprobadas() {
+    if (OFF) return OFF.resenas || [];
     if (!cliente) return [];
     const { data, error } = await cliente.from('resenas').select('id,nombre,producto_id,estrellas,texto,creada')
       .eq('aprobada', true).order('creada', { ascending: false }).limit(40);
