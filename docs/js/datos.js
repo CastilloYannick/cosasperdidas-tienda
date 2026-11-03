@@ -124,6 +124,21 @@ const Datos = (function () {
     return cli.storage.from(C.BUCKET).getPublicUrl(base + '.webp').data.publicUrl;
   }
 
+  /* ---------- Ajustes: fotos de portada y políticas ---------- */
+  async function ajustes() {
+    let base = {};
+    try { base = await (await fetch('data/ajustes.json', { cache: 'no-cache' })).json(); } catch (e) {}
+    if (!sb) return base;
+    const { data, error } = await sb.from('ajustes').select('clave,valor');
+    if (error || !data) return base;
+    data.forEach(f => { base[f.clave] = f.valor; });
+    return base;
+  }
+  async function guardarAjuste(clave, valor) {
+    const { error } = await exigir().from('ajustes').upsert({ clave, valor });
+    if (error) throw error;
+  }
+
   /* ---------- Reseñas (públicas solo las aprobadas) ---------- */
   async function resenasAprobadas() {
     if (!cliente) return [];
@@ -192,7 +207,7 @@ const Datos = (function () {
   }
 
   return {
-    resenasAprobadas, enviarResena, COURIERS, verEnvio,
+    ajustes, guardarAjuste, resenasAprobadas, enviarResena, COURIERS, verEnvio,
     todasResenas, cambiarResena, borrarResena, listarEnvios, guardarEnvio, borrarEnvio, nuevoCodigo,
     conSupabase, enPrueba, CATEGORIAS, HOJAS, padreDe, nombreCategoria, listar, miniatura, precioFinal, descuento, dinero,
     sesion, entrar, salir, guardar, actualizar, borrar, subirFoto

@@ -1,0 +1,14 @@
+{
+  "portada": {
+    "fotos": [
+      "img/p/puma-rosados-1.webp",
+      "img/p/adidas-gazelle-verde-petroleo-1.webp",
+      "img/p/reebok-classic-crema-rosado-1.webp"
+    ]
+  },
+  "politicas": {
+    "compra": "Aparto tu pieza en cuanto confirmamos el pago por mensaje. Cada artículo es único: si alguien más lo paga primero, ya no estará disponible.\nAcepto transferencia o depósito; te paso los datos por Instagram.",
+    "envio": "Hago envíos a toda Guatemala. El costo depende de tu ubicación y de la paquetería, y lo pagas tú.\nDespacho de 1 a 3 días hábiles después de confirmar el pago y te envío tu número de guía para que sigas tu paquete aquí mismo.",
+    "devoluciones": "No tengo devoluciones ni cambios. Por eso te mando todas las fotos, la talla según etiqueta y las medidas antes de que compres: pregúntame lo que necesites."
+  }
+}

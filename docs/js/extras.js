@@ -150,10 +150,24 @@
     try { await navigator.clipboard.writeText(txt); return true; } catch (e) { return false; }
   }
 
+  /* ---------- Ajustes: portada y políticas ---------- */
+  async function aplicarAjustes() {
+    const a = await Datos.ajustes();
+    const fotos = (a.portada && a.portada.fotos) || [];
+    document.querySelectorAll('.collage img').forEach((img, i) => {
+      if (fotos[i]) img.src = Datos.miniatura(fotos[i]);
+    });
+    const p = a.politicas || {};
+    $('#polCompra').textContent = p.compra || '';
+    $('#polEnvio').textContent = p.envio || '';
+    $('#polDevoluciones').textContent = p.devoluciones || '';
+  }
+
   /* ---------- Eventos ---------- */
   function conectar() {
     conectarDialogo($('#dlgResena'));
     conectarDialogo($('#dlgSeguir'));
+    conectarDialogo($('#dlgPoliticas'));
     $('#dlgSeguir').addEventListener('close', () => { if (location.hash.startsWith('#pedido')) history.replaceState(null, '', location.pathname); });
     $('#btnResena').addEventListener('click', abrirFormResena);
     $('#elegirEstrellas').addEventListener('click', e => { const b = e.target.closest('[data-e]'); if (b) ponerEstrellas(+b.dataset.e); });
@@ -161,6 +175,7 @@
     $('#formResena').texto.addEventListener('input', e => { $('#resCuenta').textContent = `${e.target.value.length}/500`; });
     document.addEventListener('click', e => {
       if (e.target.closest('[data-seguir]')) { e.preventDefault(); abrirSeguimiento(); }
+      if (e.target.closest('[data-politicas]')) { e.preventDefault(); $('#dlgPoliticas').showModal(); }
     });
     $('#formSeguir').addEventListener('submit', e => { e.preventDefault(); buscarEnvio($('#seguirCodigo').value); });
     $('#seguirResultado').addEventListener('click', async e => {
@@ -177,4 +192,5 @@
   document.addEventListener('cp:productos', e => { productos = e.detail || []; pintarResenas(); });
   conectar();
   cargarResenas();
+  aplicarAjustes();
 })();

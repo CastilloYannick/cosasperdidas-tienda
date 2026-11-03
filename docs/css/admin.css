@@ -152,3 +152,20 @@
 
 .env-ayuda { margin: 0; padding: 12px 14px; border-radius: 14px; background: var(--surface-2); color: var(--muted); font-size: 14px; }
 .fila-envio .f-acc .etq { white-space: nowrap; }
+
+/* ---------- Pestaña Tienda ---------- */
+.ajuste-caja { display: grid; gap: 14px; padding: 20px; margin-bottom: 18px; border-radius: 22px; background: var(--surface); box-shadow: var(--sombra); }
+.ajuste-caja h2 { font-size: 24px; }
+.ajuste-caja .resumen { margin: -8px 0 0; }
+.ajuste-caja .btn { justify-self: start; }
+.portada-slots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; max-width: 520px; }
+.slot { position: relative; aspect-ratio: 3 / 4; border-radius: 18px; overflow: hidden; background: var(--surface-2); border: 2px dashed var(--line); transition: transform var(--dur-pulsar) var(--ease-out), border-color var(--dur-ui) ease; }
+.slot:hover { border-color: var(--lavanda); }
+.slot:active { transform: scale(.97); }
+.slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.slot span { position: absolute; left: 6px; bottom: 6px; padding: 3px 9px; border-radius: 999px; background: var(--crema); color: #3e4d3d; font-size: 12px; font-weight: 700; }
+.galeria-fotos { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
+.galeria-fotos button { aspect-ratio: 3 / 4; border-radius: 12px; overflow: hidden; transition: transform var(--dur-pulsar) var(--ease-out), box-shadow var(--dur-ui) ease; }
+.galeria-fotos button:hover { box-shadow: 0 0 0 3px var(--lavanda); }
+.galeria-fotos button:active { transform: scale(.95); }
+.galeria-fotos img { width: 100%; height: 100%; object-fit: cover; }

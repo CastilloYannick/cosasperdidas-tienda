@@ -49,6 +49,7 @@
       <button type="button" role="tab" data-pestana="productos" aria-selected="true">Productos</button>
       <button type="button" role="tab" data-pestana="envios" aria-selected="false">Envíos</button>
       <button type="button" role="tab" data-pestana="resenas" aria-selected="false">Reseñas <span class="insignia" id="nPendientes" hidden>0</span></button>
+      <button type="button" role="tab" data-pestana="tienda" aria-selected="false">Tienda</button>
     </nav>
     <section id="secProductos" data-seccion="productos">
     <div class="tab-cabeza">
@@ -99,7 +100,43 @@
       </div>
       <ul class="lista" id="listaResenas"></ul>
     </section>
+    <!-- Tienda: portada y políticas -->
+    <section id="secTienda" data-seccion="tienda" hidden>
+      <div class="tab-cabeza">
+        <div>
+          <h1>Tu tienda</h1>
+          <p class="resumen">Elige las fotos que flotan en la portada y escribe tus políticas.</p>
+        </div>
+      </div>
+      <div class="ajuste-caja">
+        <h2>Fotos de la portada</h2>
+        <p class="resumen">Toca un cuadro para cambiar esa foto. Puedes usar fotos de tus productos o subir una nueva.</p>
+        <div class="portada-slots" id="portadaSlots"></div>
+        <button class="btn btn-prim" type="button" id="guardarPortada">Guardar portada</button>
+      </div>
+      <form class="ajuste-caja" id="formPoliticas">
+        <h2>Políticas de compra y envío</h2>
+        <label>🛍️ Compras<textarea name="compra" rows="4" maxlength="1200"></textarea></label>
+        <label>🚚 Envíos<textarea name="envio" rows="4" maxlength="1200"></textarea></label>
+        <label>🤍 Devoluciones<textarea name="devoluciones" rows="3" maxlength="1200"></textarea></label>
+        <button class="btn btn-prim" type="submit">Guardar políticas</button>
+      </form>
+    </section>
   </main>
+
+  <!-- ===== Elegir foto de portada ===== -->
+  <dialog class="editor" id="dlgElegirFoto" aria-labelledby="elegirTitulo">
+    <div class="ed-cabeza">
+      <h2 id="elegirTitulo">Elige una foto</h2>
+      <button class="cerrar" type="button" data-cerrar aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="ed-cuerpo">
+      <label class="soltar"><input type="file" id="subirPortada" accept="image/*"><span><b>Subir una foto nueva</b></span></label>
+      <div class="galeria-fotos" id="galeriaFotos"></div>
+    </div>
+  </dialog>
 
   <!-- ===== Editor de envío ===== -->
   <dialog class="editor" id="dlgEnvio" aria-labelledby="envTitulo">
@@ -195,5 +232,6 @@
   <script src="js/datos.js"></script>
   <script src="js/admin.js"></script>
   <script src="js/admin-extras.js"></script>
+  <script src="js/admin-tienda.js"></script>
 </body>
 </html>

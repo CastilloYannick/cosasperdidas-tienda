@@ -533,3 +533,10 @@ html, body { overflow-x: clip; }
 /* Botón Rastrear relleno de color */
 .btn-borde { background: var(--acento); color: var(--acento-ink); box-shadow: none; }
 @media (hover: hover) and (pointer: fine) { .btn-borde:hover { background: color-mix(in srgb, var(--acento) 82%, var(--prim)); } }
+
+/* Políticas */
+.politicas section { display: grid; gap: 4px; padding: 14px 16px; border-radius: 16px; background: var(--surface-2); }
+.politicas h4 { margin: 0; font-family: var(--f-titulo); font-size: 18px; }
+.politicas p { margin: 0; white-space: pre-line; color: var(--muted); font-size: 15px; line-height: 1.55; }
+.politicas .pol-devol { background: color-mix(in srgb, var(--rosa) 35%, var(--surface)); }
+.ficha-envio a, .car-nota a { color: var(--prim); font-weight: 700; }
