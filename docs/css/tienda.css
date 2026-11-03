@@ -420,3 +420,37 @@ dialog::backdrop { background: rgba(30, 26, 50, .55); backdrop-filter: blur(4px)
 .cat-cabeza { grid-template-columns: minmax(0, 1fr); }
 .menu-cat, .menu-cat .filtros, .cat-ajustes { min-width: 0; max-width: 100vw; }
 html, body { overflow-x: clip; }
+
+/* ---------- Celulares chicos (320–380 px) ---------- */
+@media (max-width: 380px) {
+  .barra { padding-left: 12px; padding-right: 12px; gap: 6px; }
+  .marca-txt { font-size: 21px; }
+  .barra-acc { gap: 2px; }
+  .barra .btn-icono { width: 38px; height: 38px; }
+  .btn-carrito { width: 42px; height: 42px; }
+  .portada-txt { padding-left: 16px; padding-right: 16px; }
+  .portada h1 { font-size: 34px; }
+  .sello { letter-spacing: .14em; font-size: 11.5px; }
+  .catalogo, .mosaico-sec { padding-left: 12px; padding-right: 12px; }
+  .menu-cat { margin: 0 -12px; padding: 10px 12px; }
+  .rejilla:not(.en-lista) { gap: 8px; }
+  .rejilla:not(.en-lista) .t-nombre { font-size: 14.5px; }
+  .rejilla:not(.en-lista) .t-agregar { width: 34px; height: 34px; }
+  .chip { padding: 0 13px; font-size: 14px; }
+  .pasos { width: calc(100% - 24px); }
+}
+/* Teléfono acostado: que la ficha y el visor no queden cortados */
+@media (max-height: 500px) and (orientation: landscape) {
+  .portada { min-height: auto; }
+  .collage { min-height: 300px; }
+  .foto-grande img { max-height: 80dvh; }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  .ficha[open] { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); width: 100vw; max-width: 100vw; height: 100dvh; max-height: 100dvh; margin: 0; border-radius: 0; overflow: hidden; }
+  .ficha-galeria { height: 100dvh; }
+  .foto-grande img { height: 100%; max-height: none; aspect-ratio: auto; }
+  .ficha-info { height: 100dvh; overflow-y: auto; padding: 18px 20px; }
+  .ficha-acc { position: static; }
+  .pedido { max-height: calc(100dvh - 16px); overflow-y: auto; }
+}
+.ficha-desc { white-space: pre-line; }

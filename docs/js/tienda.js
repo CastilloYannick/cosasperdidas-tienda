@@ -130,7 +130,7 @@
 
   function pintarMarcas() {
     const marcas = [...new Set(productos.map(p => p.marca).filter(Boolean))].sort((a, b) => a.localeCompare(b));
-    $('#marca').innerHTML = '<option value="">Todas las marcas</option>' + marcas.map(m => `<option>${esc(m)}</option>`).join('');
+    $('#marca').innerHTML = '<option value="">Marca</option>' + marcas.map(m => `<option>${esc(m)}</option>`).join('');
     $('#marca').hidden = marcas.length < 2;
   }
 
