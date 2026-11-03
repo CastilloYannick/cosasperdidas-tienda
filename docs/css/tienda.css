@@ -522,3 +522,9 @@ html, body { overflow-x: clip; }
 .pie-enlaces a { opacity: .9; font-weight: 600; }
 .pasos li a { color: var(--prim); font-weight: 700; }
 .form-dlg { max-height: calc(100dvh - 24px); overflow-y: auto; overscroll-behavior: contain; }
+
+/* Botón secundario de la portada: Rastrear mi pedido */
+.btn-borde { background: transparent; color: var(--prim); box-shadow: inset 0 0 0 2px var(--prim); }
+@media (hover: hover) and (pointer: fine) { .btn-borde:hover { background: color-mix(in srgb, var(--prim) 10%, transparent); } }
+.portada-cta .contador { flex-basis: 100%; }
+@media (max-width: 380px) { .portada-cta .btn { padding: 0 16px; font-size: 15px; } }

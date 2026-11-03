@@ -148,7 +148,7 @@ const Datos = (function () {
   ];
   const COURIERS = [
     { nombre: 'Guatex', url: 'https://guatex.com/' },
-    { nombre: 'Forza Delivery', url: 'https://www.forzadelivery.com/' },
+    { nombre: 'Forza Delivery', url: 'https://rastreo.forzadelivery.com/' },
     { nombre: 'Cargo Expreso', url: 'https://www.cargoexpreso.com/' },
     { nombre: 'Correos de Guatemala', url: '' },
     { nombre: 'Entrega personal', url: '' }
