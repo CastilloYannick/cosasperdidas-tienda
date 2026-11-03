@@ -74,6 +74,58 @@
     } else sub.hidden = true;
   }
 
+  /* ---------- Mosaico de categorías ----------
+     Cada cuadro usa la primera foto de un producto de esa categoría; si
+     todavía no hay productos, muestra una ilustración con "Pronto". */
+  const ILUSTRACION = {
+    ropa: '<path d="M9 4 4.5 6.5 6 10.5l2-1V20h8V9.5l2 1 1.5-4L15 4c-.5 1.4-1.6 2.2-3 2.2S9.5 5.4 9 4Z"/>',
+    'ropa-ninos': '<path d="M9 4 4.5 6.5 6 10.5l2-1V20h8V9.5l2 1 1.5-4L15 4c-.5 1.4-1.6 2.2-3 2.2S9.5 5.4 9 4Z"/><path d="M8 13h8"/>',
+    'ropa-ninas': '<path d="M9.5 4h5l-1 3.5 4.5 12.5H6l4.5-12.5L9.5 4Z"/><path d="M10.5 7.5h3"/>',
+    accesorios: '<path d="M7 9h10l1 11H6L7 9Z"/><path d="M9 9V7.5a3 3 0 0 1 6 0V9"/>',
+    charms: '<circle cx="12" cy="5" r="2"/><path d="M12 7v3"/><path d="M12 20s-6-3.6-6-7.5A3 3 0 0 1 12 11a3 3 0 0 1 6 1.5C18 16.4 12 20 12 20Z"/>',
+    carteras: '<path d="M7 9h10l1 11H6L7 9Z"/><path d="M9 9V7.5a3 3 0 0 1 6 0V9"/>',
+    salud: '<rect x="7" y="7" width="10" height="13" rx="2.5"/><path d="M8.5 4h7v3h-7z"/><path d="M12 11v5M9.5 13.5h5"/>',
+    deportivos: '<path d="M4 15.5 5 9l4 1 2 2.5 5 1.5c2.5.7 4 1.7 4 3.5H5a1 1 0 0 1-1-2Z"/>',
+    casuales: '<path d="M4 15.5 5 9l4 1 2 2.5 5 1.5c2.5.7 4 1.7 4 3.5H5a1 1 0 0 1-1-2Z"/>',
+    tacones: '<path d="M4 17c0-5 4-8 9-8l7 1v2l-6 1-3 4H4Z"/><path d="M16 13v6"/>'
+  };
+  const FONDOS = ['#ffc0f3', '#7d80da', '#e1a2d5', '#fff3f3', '#e6adec', '#fff8ed'];
+  let mosaicoPadre = null;
+
+  function fotoDe(cat) {
+    const p = productos.find(p => enCat(p, cat) && p.estado !== 'vendido' && (p.fotos || [])[0]) ||
+      productos.find(p => enCat(p, cat) && (p.fotos || [])[0]);
+    return p ? Datos.miniatura(p.fotos[0]) : null;
+  }
+
+  function cuadro(id, nombre, i, conSubs) {
+    const n = productos.filter(p => enCat(p, id)).length, foto = fotoDe(id);
+    const fondo = foto ? `<img src="${esc(foto)}" alt="" loading="lazy" decoding="async">`
+      : `<span class="m-ilus" style="--fondo:${FONDOS[i % FONDOS.length]}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ILUSTRACION[id] || ILUSTRACION.accesorios}</svg></span>`;
+    return `<button class="m-cuadro${foto ? '' : ' sin-foto'}" type="button" data-mosaico="${esc(id)}" style="--i:${i}"${conSubs ? ' aria-haspopup="true"' : ''}>
+      ${fondo}<span class="m-nombre">${esc(nombre)}</span>
+      <span class="m-cuenta">${n ? `${n} ${n === 1 ? 'pieza' : 'piezas'}` : 'Pronto'}${conSubs ? ' ›' : ''}</span>
+    </button>`;
+  }
+
+  function pintarMosaico() {
+    const c = mosaicoPadre && Datos.CATEGORIAS.find(x => x.id === mosaicoPadre);
+    $('#mosaicoVolver').hidden = !c;
+    $('#mosaicoTitulo').textContent = c ? c.nombre : 'Categorías';
+    const m = $('#mosaico');
+    m.classList.toggle('sub', !!c);
+    m.innerHTML = c
+      ? cuadro(c.id, 'Todo ' + c.nombre.toLowerCase(), 0, false) + c.subs.map((s, i) => cuadro(s.id, s.nombre, i + 1, false)).join('')
+      : Datos.CATEGORIAS.map((x, i) => cuadro(x.id, x.nombre, i, !!(x.subs && !(x.subs.length === 1 && x.subs[0].id === x.id)))).join('');
+  }
+
+  function elegirCategoria(id) {
+    filtro.cat = id;
+    pintarMenu();
+    pintarRejilla();
+    $('#catalogo').scrollIntoView({ behavior: Efectos.reducido() ? 'auto' : 'smooth', block: 'start' });
+  }
+
   function pintarMarcas() {
     const marcas = [...new Set(productos.map(p => p.marca).filter(Boolean))].sort((a, b) => a.localeCompare(b));
     $('#marca').innerHTML = '<option value="">Todas las marcas</option>' + marcas.map(m => `<option>${esc(m)}</option>`).join('');
@@ -339,6 +391,15 @@
       pintarMenu();
       pintarRejilla();
     });
+    $('#mosaico').addEventListener('click', e => {
+      const b = e.target.closest('[data-mosaico]');
+      if (!b) return;
+      const c = Datos.CATEGORIAS.find(x => x.id === b.dataset.mosaico);
+      // Ropa y Accesorios abren su submenú; lo demás va directo al catálogo
+      if (!mosaicoPadre && c && b.hasAttribute('aria-haspopup')) { mosaicoPadre = c.id; pintarMosaico(); }
+      else elegirCategoria(b.dataset.mosaico);
+    });
+    $('#mosaicoVolver').addEventListener('click', () => { mosaicoPadre = null; pintarMosaico(); });
     $('#marca').addEventListener('change', e => { filtro.marca = e.target.value; pintarRejilla(); });
     $('.vista').addEventListener('click', e => {
       const b = e.target.closest('[data-vista]');
@@ -434,6 +495,7 @@
       return;
     }
     pintarMenu();
+    pintarMosaico();
     pintarMarcas();
     ponerVista(vista);
     pintarRejilla();
