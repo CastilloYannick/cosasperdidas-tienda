@@ -1,9 +1,9 @@
 # Cosas Perdidas · tienda
 
-Sitio estático de cosasperdidas.shop. La carpeta `site/` es lo que se publica.
+Sitio estático de cosasperdidas.shop. La carpeta `docs/` es lo que se publica.
 
-- `site/index.html` tienda (catálogo, carrito, pedido por Instagram)
-- `site/admin.html` panel (se abre tocando 5 veces la flor del pie de página)
-- `site/js/config.js` URL y llave pública de Supabase
+- `docs/index.html` tienda (catálogo, carrito, pedido por Instagram)
+- `docs/admin.html` panel (se abre tocando 5 veces la flor del pie de página)
+- `docs/js/config.js` URL y llave pública de Supabase
 - `supabase/esquema.sql` tabla `productos`, permisos y bucket `fotos`
-- `tools/` scripts para optimizar fotos y servir el sitio en local (`node tools/servidor.js`)
+- `tools/` scripts para optimizar fotos y servir el sitio en local (`node tools/servidor.js`, publica desde `docs/`)
