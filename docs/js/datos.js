@@ -26,7 +26,7 @@ const Datos = (function () {
     { id: 'tacones', nombre: 'Tacones' },
     { id: 'ropa', nombre: 'Ropa', subs: [{ id: 'ropa-ninos', nombre: 'Niños' }, { id: 'ropa-ninas', nombre: 'Niñas' }] },
     { id: 'accesorios', nombre: 'Accesorios', subs: [{ id: 'charms', nombre: 'Charms' }, { id: 'carteras', nombre: 'Carteras' }] },
-    { id: 'salud', nombre: 'Salud', subs: [{ id: 'salud', nombre: 'Vitaminas' }] }
+    { id: 'salud', nombre: 'Salud y belleza', subs: [{ id: 'vitaminas', nombre: 'Vitaminas' }, { id: 'piel-cuerpo', nombre: 'Piel y cuerpo' }, { id: 'cabello', nombre: 'Cabello' }] }
   ];
   const HOJAS = CATEGORIAS.flatMap(c => (c.subs ? c.subs.map(s => ({ ...s, padre: c.id, nombreLargo: c.nombre + ' · ' + s.nombre })) : [{ ...c, padre: c.id, nombreLargo: c.nombre }]));
   const padreDe = id => (HOJAS.find(h => h.id === id) || {}).padre || id;

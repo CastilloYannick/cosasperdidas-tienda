@@ -177,5 +177,200 @@
       "img/p/sandalias-blancas-tacon-2.webp",
       "img/p/sandalias-blancas-tacon-3.webp"
     ]
+  },
+  {
+    "id": "solanum-omega-3-max",
+    "nombre": "Omega 3 Max Solanum",
+    "marca": "Solanum",
+    "emoji": "🐟",
+    "categoria": "vitaminas",
+    "descripcion": "Omega 3 de salmón salvaje de Alaska con vitaminas A, D3 y E y astaxantina. 🐟\n\nFrasco de 180 cápsulas de 1.4 g. Se toma una cápsula dos veces al día con un vaso de agua.\n\nEste producto no es un medicamento.",
+    "precio": null,
+    "precio_oferta": null,
+    "talla": "",
+    "estado": "disponible",
+    "orden": 10,
+    "fotos": [
+      "img/p/solanum-omega-3-max-1.webp",
+      "img/p/solanum-omega-3-max-2.webp",
+      "img/p/solanum-omega-3-max-3.webp"
+    ]
+  },
+  {
+    "id": "solanum-3-magnesios",
+    "nombre": "3 Magnesios con espirulina y vitamina D3 Solanum",
+    "marca": "Solanum",
+    "emoji": "💚",
+    "categoria": "vitaminas",
+    "descripcion": "Tres tipos de magnesio (citrato, glicinato y óxido) con espirulina y vitamina D3. 💚\n\nFrasco de 220 cápsulas. Se toman dos cápsulas al día con un vaso de agua, de preferencia con los alimentos.\n\nEste producto no es un medicamento.",
+    "precio": null,
+    "precio_oferta": null,
+    "talla": "",
+    "estado": "disponible",
+    "orden": 11,
+    "fotos": [
+      "img/p/solanum-3-magnesios-1.webp",
+      "img/p/solanum-3-magnesios-2.webp",
+      "img/p/solanum-3-magnesios-3.webp"
+    ]
+  },
+  {
+    "id": "justfx-glucosamina",
+    "nombre": "Glucosamina Just Fx con condroitina y colágeno",
+    "marca": "Just Fx",
+    "emoji": "🦴",
+    "categoria": "vitaminas",
+    "descripcion": "Suplemento con glucosamina, condroitina, ácido hialurónico, colágeno, zinc y boro. Fórmula premium de 180 tabletas. ✨\n\nEste producto no es un medicamento.",
+    "precio": null,
+    "precio_oferta": null,
+    "talla": "",
+    "estado": "disponible",
+    "orden": 12,
+    "fotos": [
+      "img/p/justfx-glucosamina-1.webp",
+      "img/p/justfx-glucosamina-2.webp",
+      "img/p/justfx-glucosamina-3.webp"
+    ]
+  },
+  {
+    "id": "rocavit-fem",
+    "nombre": "Rocavit Fem",
+    "marca": "Vitae",
+    "emoji": "🌸",
+    "categoria": "vitaminas",
+    "descripcion": "Suplemento alimenticio pensado para mujeres, con vitaminas, minerales, isoflavonas de soya, colágeno y coenzima Q-10. 🌸\n\nCaja con 30 cápsulas.",
+    "precio": null,
+    "precio_oferta": null,
+    "talla": "",
+    "estado": "disponible",
+    "orden": 13,
+    "fotos": [
+      "img/p/rocavit-fem-1.webp",
+      "img/p/rocavit-fem-2.webp"
+    ]
+  },
+  {
+    "id": "honeykeeper-kit-shampoo-crema",
+    "nombre": "Kit The Honeykeeper: 2 shampoo 3 en 1 y crema corporal",
+    "marca": "The Honeykeeper",
+    "emoji": "🍯",
+    "categoria": "piel-cuerpo",
+    "descripcion": "¡El kit más tierno! 🐻🍯\n\nTrae 2 shampoo 3 en 1 de manzanilla y miel (700 ml cada uno) y 1 crema corporal de avena (700 ml). Fórmula hipoalergénica, libre de parabenos, sulfatos y lágrimas, con miel orgánica.",
+    "precio": null,
+    "precio_oferta": null,
+    "talla": "",
+    "estado": "disponible",
+    "orden": 14,
+    "fotos": [
+      "img/p/honeykeeper-kit-shampoo-crema-1.webp",
+      "img/p/honeykeeper-kit-shampoo-crema-2.webp",
+      "img/p/honeykeeper-kit-shampoo-crema-3.webp",
+      "img/p/honeykeeper-kit-shampoo-crema-4.webp",
+      "img/p/honeykeeper-kit-shampoo-crema-5.webp",
+      "img/p/honeykeeper-kit-shampoo-crema-6.webp"
+    ]
+  },
+  {
+    "id": "lubriderm-reparacion-intensiva",
+    "nombre": "Lubriderm Reparación Intensiva 1.5 L",
+    "marca": "Lubriderm",
+    "emoji": "🧴",
+    "categoria": "piel-cuerpo",
+    "descripcion": "Tamaño familiar de 1.5 litros con dispensador. 🧴\n\nCrema para piel áspera y extra seca, ayuda a reparar la piel de forma continua. Rinde muchísimo.",
+    "precio": null,
+    "precio_oferta": null,
+    "talla": "",
+    "estado": "disponible",
+    "orden": 15,
+    "fotos": [
+      "img/p/lubriderm-reparacion-intensiva-1.webp",
+      "img/p/lubriderm-reparacion-intensiva-2.webp"
+    ]
+  },
+  {
+    "id": "lubriderm-proteccion-solar-fps15",
+    "nombre": "Lubriderm Protección Solar FPS 15",
+    "marca": "Lubriderm",
+    "emoji": "☀️",
+    "categoria": "piel-cuerpo",
+    "descripcion": "Tamaño familiar de 946 ml con dispensador. ☀️\n\nHumectación y protección solar FPS 15 para cara y cuerpo, de rápida absorción y sin sensación grasosa.",
+    "precio": null,
+    "precio_oferta": null,
+    "talla": "",
+    "estado": "disponible",
+    "orden": 16,
+    "fotos": [
+      "img/p/lubriderm-proteccion-solar-fps15-1.webp",
+      "img/p/lubriderm-proteccion-solar-fps15-2.webp"
+    ]
+  },
+  {
+    "id": "lubriderm-humectacion-delicada",
+    "nombre": "Lubriderm Humectación Delicada 400 ml",
+    "marca": "Lubriderm",
+    "emoji": "🩵",
+    "categoria": "piel-cuerpo",
+    "descripcion": "Para piel sensible. 🩵\n\nMejora la hidratación y está libre de fragancia, colorantes, parabenos y lanolina. Botella de 400 ml.",
+    "precio": null,
+    "precio_oferta": null,
+    "talla": "",
+    "estado": "disponible",
+    "orden": 17,
+    "fotos": [
+      "img/p/lubriderm-humectacion-delicada-1.webp",
+      "img/p/lubriderm-humectacion-delicada-2.webp"
+    ]
+  },
+  {
+    "id": "lubriderm-humectacion-diaria",
+    "nombre": "Lubriderm Humectación Diaria 400 ml",
+    "marca": "Lubriderm",
+    "emoji": "💙",
+    "categoria": "piel-cuerpo",
+    "descripcion": "Para piel normal a seca. 💙\n\nFórmula ligera con glicerina y emolientes, de rápida absorción. Botella de 400 ml.",
+    "precio": null,
+    "precio_oferta": null,
+    "talla": "",
+    "estado": "disponible",
+    "orden": 18,
+    "fotos": [
+      "img/p/lubriderm-humectacion-diaria-1.webp",
+      "img/p/lubriderm-humectacion-diaria-2.webp"
+    ]
+  },
+  {
+    "id": "elvive-oleo-extraordinario",
+    "nombre": "Elvive Óleo Extraordinario L'Oréal",
+    "marca": "L'Oréal",
+    "emoji": "✨",
+    "categoria": "cabello",
+    "descripcion": "El aceite capilar favorito para cabello seco. ✨\n\nUnas gotitas dejan el cabello suave, brillante y sin frizz.",
+    "precio": null,
+    "precio_oferta": null,
+    "talla": "",
+    "estado": "disponible",
+    "orden": 19,
+    "fotos": [
+      "img/p/elvive-oleo-extraordinario-1.webp",
+      "img/p/elvive-oleo-extraordinario-2.webp"
+    ]
+  },
+  {
+    "id": "perfect-care-mascarilla-biotina",
+    "nombre": "Mascarilla capilar Perfect Care con biotina y colágeno",
+    "marca": "Perfect Care",
+    "emoji": "💜",
+    "categoria": "cabello",
+    "descripcion": "Mascarilla tipo salón con biotina y colágeno, acondicionamiento profundo de 48 horas para un cabello más suave. 💜\n\nFrasco de 800 g. Se aplica en el cabello húmedo después del shampoo, se deja 5 minutos y se enjuaga.",
+    "precio": null,
+    "precio_oferta": null,
+    "talla": "",
+    "estado": "disponible",
+    "orden": 20,
+    "fotos": [
+      "img/p/perfect-care-mascarilla-biotina-1.webp",
+      "img/p/perfect-care-mascarilla-biotina-2.webp",
+      "img/p/perfect-care-mascarilla-biotina-3.webp"
+    ]
   }
 ]

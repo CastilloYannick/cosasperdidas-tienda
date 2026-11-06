@@ -88,6 +88,9 @@
     charms: '<circle cx="12" cy="5" r="2"/><path d="M12 7v3"/><path d="M12 20s-6-3.6-6-7.5A3 3 0 0 1 12 11a3 3 0 0 1 6 1.5C18 16.4 12 20 12 20Z"/>',
     carteras: '<path d="M7 9h10l1 11H6L7 9Z"/><path d="M9 9V7.5a3 3 0 0 1 6 0V9"/>',
     salud: '<rect x="7" y="7" width="10" height="13" rx="2.5"/><path d="M8.5 4h7v3h-7z"/><path d="M12 11v5M9.5 13.5h5"/>',
+    vitaminas: '<rect x="7" y="7" width="10" height="13" rx="2.5"/><path d="M8.5 4h7v3h-7z"/><path d="M12 11v5M9.5 13.5h5"/>',
+    'piel-cuerpo': '<path d="M10 3h4v3h-4z"/><path d="M9 6h6l1 3v10a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 8 19V9l1-3Z"/><path d="M10.5 13h3"/>',
+    cabello: '<path d="M10 3h4v4h-4z"/><path d="M12 7c-3 2-4 4.5-4 7a4 4 0 0 0 8 0c0-2.5-1-5-4-7Z"/>',
     deportivos: '<path d="M4 15.5 5 9l4 1 2 2.5 5 1.5c2.5.7 4 1.7 4 3.5H5a1 1 0 0 1-1-2Z"/>',
     casuales: '<path d="M4 15.5 5 9l4 1 2 2.5 5 1.5c2.5.7 4 1.7 4 3.5H5a1 1 0 0 1-1-2Z"/>',
     tacones: '<path d="M4 17c0-5 4-8 9-8l7 1v2l-6 1-3 4H4Z"/><path d="M16 13v6"/>'
